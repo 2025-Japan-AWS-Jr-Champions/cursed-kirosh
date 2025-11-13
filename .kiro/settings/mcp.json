@@ -13,6 +13,18 @@
         "search_documentation",
         "read_documentation"
       ]
+    },
+    "next-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "next-devtools-mcp@latest"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "init",
+        "nextjs_docs"
+      ]
     }
   }
 }
