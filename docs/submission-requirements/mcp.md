@@ -99,3 +99,95 @@
 5. Interactive debugging - click, type, and navigate programmatically
 
 **Workflow Integration**: Combined with Next.js DevTools, Playwright enables end-to-end verification: start the dev server with `nextjs_runtime`, navigate to pages with `browser_navigate`, verify rendering with `browser_snapshot`, and catch errors with `browser_console_messages` - all within a single AI-assisted workflow.
+
+---
+
+### Serena Code Intelligence (`serena`)
+
+**Purpose**: Semantic code analysis and intelligent editing for multiple programming languages
+
+**Command**: `uvx --from git+https://github.com/oraios/serena serena start-mcp-server`
+
+**Supported Languages**: Python, JavaScript/TypeScript, Java, C#, Rust, Go, Ruby, C++, PHP, Swift, Elixir, Terraform, Bash
+
+**Core Tools**:
+
+**Code Reading & Analysis**:
+- `read_file` - Read file content with optional line ranges
+- `get_symbols_overview` - Get high-level overview of symbols in a file
+- `find_symbol` - Find symbols by name path with hierarchy support
+- `find_referencing_symbols` - Find all references to a symbol
+- `search_for_pattern` - Flexible regex-based code search
+
+**Code Editing**:
+- `replace_symbol_body` - Replace entire symbol definitions
+- `insert_after_symbol` - Insert code after a symbol
+- `insert_before_symbol` - Insert code before a symbol
+- `replace_regex` - Regex-based replacements for precise edits
+- `rename_symbol` - Rename symbols across entire codebase
+
+**Project Management**:
+- `activate_project` - Initialize Serena for a project
+- `list_dir` - List directory contents
+- `find_file` - Find files by pattern
+- `create_text_file` - Create new files
+- `execute_shell_command` - Run shell commands
+
+**Memory System**:
+- `write_memory` - Store project knowledge
+- `read_memory` - Retrieve stored knowledge
+- `list_memories` - List available memories
+- `edit_memory` - Update memory content
+- `delete_memory` - Remove memories
+
+**Key Benefits**:
+
+- **Semantic Understanding**: Works with code symbols (classes, functions, methods) rather than raw text
+- **Language-Agnostic**: Single interface for multiple programming languages
+- **Precise Editing**: Symbol-level operations prevent accidental changes
+- **Cross-File Intelligence**: Track references and dependencies across files
+- **Memory System**: Persist project knowledge between sessions
+- **Efficient Reading**: Read only necessary code, not entire files
+
+**Example Use Case**: When refactoring a Python class, Serena can:
+1. Find the class definition with `find_symbol`
+2. Discover all methods with depth parameter
+3. Find all references across the codebase with `find_referencing_symbols`
+4. Replace method bodies with `replace_symbol_body`
+5. Rename the class with `rename_symbol` (updates all references automatically)
+
+**Why It's Essential**: Traditional text-based editing is error-prone and inefficient. Serena provides:
+
+1. **Symbol-Level Precision**: Edit functions/classes without regex complexity
+2. **Intelligent Search**: Find code by semantic meaning, not just text patterns
+3. **Safe Refactoring**: Automatic reference tracking prevents breaking changes
+4. **Multi-Language Support**: Consistent interface across 13+ languages
+5. **Project Memory**: Store architectural decisions and patterns for future reference
+
+**Workflow Integration**: 
+
+Serena excels at large-scale refactoring and codebase exploration:
+
+- **Before Implementation**: Use `get_symbols_overview` to understand file structure
+- **During Development**: Use `find_symbol` with depth to explore class hierarchies
+- **For Refactoring**: Use `find_referencing_symbols` to ensure safe changes
+- **Cross-File Changes**: Use `rename_symbol` for codebase-wide updates
+- **Knowledge Retention**: Use memory system to document patterns and decisions
+
+**Comparison with Traditional Tools**:
+
+| Task | Traditional Approach | Serena Approach |
+|------|---------------------|-----------------|
+| Find a method | Grep + manual inspection | `find_symbol` with name path |
+| Rename a class | Find/replace (risky) | `rename_symbol` (safe, automatic) |
+| Understand file | Read entire file | `get_symbols_overview` (summary) |
+| Edit function | Regex or manual | `replace_symbol_body` (precise) |
+| Track references | Manual search | `find_referencing_symbols` (automatic) |
+
+**Best Practices**:
+
+1. **Start with Overview**: Always call `get_symbols_overview` before editing unfamiliar files
+2. **Use Symbol Tools First**: Prefer symbol-level operations over regex when possible
+3. **Verify References**: Check `find_referencing_symbols` before major changes
+4. **Leverage Memory**: Document architectural patterns for consistent development
+5. **Efficient Reading**: Use depth parameter to control how much code to retrieve
