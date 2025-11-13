@@ -1,11 +1,11 @@
 ---
-inclusion: fileMatch
-fileMatchPattern: 'docs/submission-requirements/**/*.md'
+inclusion: always
 ---
 
 # Documentation Requirements
 
-When working on submission documentation, record all Kiro usage details in the appropriate files under `docs/submission-requirements/`.
+The following items are required for submission.
+If you take any actions related to them, please record them in the Markdown files under `docs/submission-requirements`.
 
 ## Required Documentation Topics
 
