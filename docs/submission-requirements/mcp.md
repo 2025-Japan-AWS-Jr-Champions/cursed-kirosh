@@ -55,3 +55,47 @@
 4. Complete testing - browser automation verifies actual behavior
 
 **Workflow Integration**: The `init` tool loads the complete Next.js documentation index (llms.txt), enabling direct documentation retrieval without search overhead. This dramatically speeds up development by providing instant access to accurate API references, guides, and examples.
+
+---
+
+### Playwright Browser Automation (`playwright`)
+
+**Purpose**: Automated browser testing and web interaction capabilities
+
+**Command**: `npx @playwright/mcp@latest`
+
+**Tools**:
+
+- `browser_navigate` - Navigate to URLs
+- `browser_snapshot` - Capture accessibility snapshot of page structure
+- `browser_click` - Click elements on the page
+- `browser_type` - Type text into form fields
+- `browser_fill_form` - Fill multiple form fields at once
+- `browser_take_screenshot` - Capture visual screenshots
+- `browser_console_messages` - Retrieve browser console logs
+- `browser_evaluate` - Execute JavaScript in browser context
+- `browser_close` - Close browser instance
+- `browser_wait_for` - Wait for elements or conditions
+- `browser_tabs` - Manage multiple browser tabs
+- `browser_network_requests` - Monitor network activity
+
+**Key Benefits**:
+
+- Real browser automation without writing test scripts
+- Accessibility-first page inspection via YAML snapshots
+- Visual verification through screenshots
+- Console error detection for debugging
+- Form interaction and testing capabilities
+- Network monitoring for API debugging
+
+**Example Use Case**: When developing a web application, Kiro can automatically navigate to pages, interact with forms, capture screenshots for verification, and check console errors - all without leaving the conversation. This enables rapid testing and debugging cycles.
+
+**Why It's Essential**: Traditional testing requires context switching between IDE, browser, and test frameworks. Playwright MCP enables:
+
+1. Instant browser automation - test features as you build them
+2. Visual verification - screenshots confirm UI changes
+3. Accessibility inspection - YAML snapshots reveal page structure
+4. Error detection - console messages catch runtime issues
+5. Interactive debugging - click, type, and navigate programmatically
+
+**Workflow Integration**: Combined with Next.js DevTools, Playwright enables end-to-end verification: start the dev server with `nextjs_runtime`, navigate to pages with `browser_navigate`, verify rendering with `browser_snapshot`, and catch errors with `browser_console_messages` - all within a single AI-assisted workflow.
