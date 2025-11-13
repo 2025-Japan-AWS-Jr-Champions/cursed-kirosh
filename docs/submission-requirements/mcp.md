@@ -58,6 +58,61 @@
 
 ---
 
+### Fetch (`fetch`)
+
+**Purpose**: Fetch and convert web pages to markdown format for documentation access
+
+**Command**: `uvx mcp-server-fetch`
+
+**Tools**:
+- `fetch` - Fetch URL content and convert to markdown
+
+**Parameters**:
+- `url` (required) - URL to fetch
+- `max_length` (optional) - Maximum characters to return (default: 5000)
+- `start_index` (optional) - Starting character index for pagination (default: 0)
+- `raw` (optional) - Get raw HTML instead of markdown (default: false)
+
+**Key Benefits**:
+
+- Access any web documentation in real-time
+- Automatic HTML to markdown conversion for readability
+- Pagination support for long documents
+- No need to leave the development environment
+
+**Example Use Case**: When working with AWS Amplify Gen2, Kiro can fetch documentation directly from https://docs.amplify.aws/nextjs/ to get the latest setup instructions, API references, and best practices without relying on potentially outdated training data.
+
+**Why It's Essential**: Many frameworks and services have documentation that changes frequently. The fetch MCP server enables:
+
+1. **Always Current**: Access the latest documentation from any website
+2. **No Context Switching**: Read docs without opening a browser
+3. **Markdown Format**: Clean, readable format for AI processing
+4. **Pagination**: Handle long documents efficiently with start_index
+5. **Universal Access**: Works with any public documentation site
+
+**Workflow Integration**: Combined with other MCP servers, fetch enables comprehensive documentation access:
+- AWS docs via dedicated aws-docs MCP (optimized)
+- Next.js docs via next-devtools MCP (with runtime integration)
+- Amplify, Tailwind, or any other framework via fetch MCP (universal fallback)
+
+**Usage Pattern**:
+```typescript
+// Fetch Amplify documentation
+fetch("https://docs.amplify.aws/nextjs/start/quickstart/", max_length: 15000)
+
+// Continue reading if truncated
+fetch("https://docs.amplify.aws/nextjs/start/quickstart/", start_index: 15000, max_length: 15000)
+```
+
+**Best Practices**:
+1. Use dedicated MCP servers (aws-docs, next-devtools) when available for better integration
+2. Use fetch MCP for frameworks without dedicated servers
+3. Start with reasonable max_length (5000-15000) to avoid truncation
+4. Use pagination (start_index) for long documents
+5. Prefer markdown mode (default) over raw HTML for better readability
+
+---
+
 ### Playwright Browser Automation (`playwright`)
 
 **Purpose**: Automated browser testing and web interaction capabilities

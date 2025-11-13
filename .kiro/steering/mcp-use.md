@@ -54,6 +54,26 @@ Browser automation for testing and verification.
 
 **Use for:** UI verification, form testing, console error detection, visual regression, accessibility inspection.
 
+### fetch
+
+Universal web documentation access.
+
+**Primary tools:**
+
+- `mcp_fetch_fetch` - Fetch any URL and convert to markdown
+
+**Use for:** Accessing documentation from any website (Amplify, Tailwind, framework docs without dedicated MCP servers).
+
+**When to use:**
+- For frameworks/services without dedicated MCP servers (e.g., Amplify, Tailwind, Vite)
+- As a fallback when specialized servers don't have specific content
+- For accessing blog posts, tutorials, or community documentation
+
+**When NOT to use:**
+- Use `aws-docs` for AWS services (optimized with search)
+- Use `next-devtools` for Next.js (includes runtime integration)
+- Avoid for frequently accessed docs - prefer dedicated MCP servers
+
 ### serena
 
 Semantic code analysis and symbol-level editing.
@@ -79,6 +99,13 @@ Semantic code analysis and symbol-level editing.
 2. Read details: `mcp_aws_docs_read_documentation` for specific pages
 3. Implement using verified patterns from documentation
 4. **Never** answer AWS questions from training data alone
+
+### Amplify Gen2 Development
+
+1. Fetch docs: `mcp_fetch_fetch` from https://docs.amplify.aws/nextjs/ for setup and configuration
+2. Use pagination: If content is truncated, continue with `start_index` parameter
+3. Implement using verified patterns from official documentation
+4. **Always** fetch latest docs - Amplify Gen2 is rapidly evolving
 
 ### Next.js Development
 
@@ -130,8 +157,17 @@ Semantic code analysis and symbol-level editing.
 
 ## Decision Tree
 
-**When user asks about AWS/Next.js:**
-→ Query relevant MCP docs → Implement from verified patterns
+**When user asks about AWS services:**
+→ Use `aws-docs` MCP → Search and read → Implement from verified patterns
+
+**When user asks about Next.js:**
+→ Use `next-devtools` MCP → Query docs → Check runtime if debugging → Implement
+
+**When user asks about Amplify Gen2:**
+→ Use `fetch` MCP with https://docs.amplify.aws/nextjs/ → Read setup guides → Implement
+
+**When user asks about other frameworks (Tailwind, Vite, etc.):**
+→ Use `fetch` MCP with official docs URL → Read relevant sections → Implement
 
 **When debugging Next.js:**
 → Check runtime state → Inspect browser console → Fix based on actual errors
