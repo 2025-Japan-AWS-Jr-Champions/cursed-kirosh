@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "Verify, Lint and Format Code",
+  "description": "Verifies app functionality with Playwright browser automation, then runs linter and formatter on code modifications",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "amplify-nextjs-app/**/*.ts",
+      "amplify-nextjs-app/**/*.tsx",
+      "amplify-nextjs-app/**/*.js",
+      "amplify-nextjs-app/**/*.jsx"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Code files have been modified. Please:\n1. First, verify the app is running by navigating to http://localhost:3000 using Playwright MCP (mcp_playwright_browser_navigate)\n2. Take a snapshot (mcp_playwright_browser_snapshot) to verify the page loads correctly\n3. Check for console errors (mcp_playwright_browser_console_messages)\n4. If the app works correctly, proceed with linting: run the linter (biome lint) on the modified files\n5. Review any linting errors and fix them\n6. Continue fixing until all linting errors are resolved\n7. Once linting is clean, run the formatter (biome format) on the files\n8. Confirm the process is complete"
+  }
+}
