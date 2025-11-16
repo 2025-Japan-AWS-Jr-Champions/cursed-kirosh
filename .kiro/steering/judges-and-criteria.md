@@ -30,9 +30,40 @@ Emphasize:
 - Unique use of public resources (datasets, APIs, libraries)
 - Delightful user experiences
 
-## Development Guidelines
+## 4. Development Guidelines
 
 - All materials must be in English
 - Document Kiro usage comprehensively in `docs/submission-requirements/`
 - Focus on demonstrating both breadth and depth of Kiro feature usage
 - Balance innovation with practical utility
+
+## 5. Core Requirements
+
+### Functionality
+- Must install and run consistently on the target platform
+- Must function as documented and demonstrated
+- Must be production-ready, not a prototype
+
+### Kiro Feature Usage
+- Must utilize Kiro features (vibe coding, agent hooks, steering docs, MCP, or specs)
+- Document all Kiro feature usage in `docs/submission-requirements/`
+- Demonstrate strategic integration of features
+
+### Project Status
+- New projects: Built entirely during the hackathon period
+- Existing projects: Must show significant updates and solve a new use case
+- Document what changed and why in existing projects
+
+### Third-Party Integration
+- Verify authorization for all SDKs, APIs, and data sources
+- Comply with licensing requirements and terms of service
+- Document integration choices and rationale
+
+## Development Guidelines
+
+When implementing features:
+- Align all decisions with the chosen category theme
+- Ensure cross-platform compatibility where applicable
+- Write clear installation and usage instructions
+- Test thoroughly on the target platform
+- All materials must be in English
