@@ -73,10 +73,13 @@ client.models.Todo.delete({ ... });
 
 ## Common Commands
 
+**Always use `--profile kirosh` for all AWS and Amplify commands.**
+
 ```bash
-npx ampx sandbox                    # Start dev environment
-npx ampx generate outputs           # Generate types
-npx ampx pipeline-deploy --branch main --app-id ID
+npx ampx sandbox --profile kirosh                    # Start dev environment
+npx ampx generate outputs --profile kirosh           # Generate types
+npx ampx pipeline-deploy --branch main --app-id ID --profile kirosh
+aws [command] --profile kirosh                       # Any AWS CLI command
 ```
 
 ## Rules
@@ -84,6 +87,8 @@ npx ampx pipeline-deploy --branch main --app-id ID
 - ✅ Use TypeScript-first with generated types
 - ✅ Follow code-first DX patterns from docs
 - ✅ Fetch docs for every feature implementation
+- ✅ **Always specify `--profile kirosh` for all AWS/Amplify commands**
 - ❌ Never use Gen1 patterns (`amplify-cli`, `amplify push`)
 - ❌ Never rely on training data for syntax
 - ❌ Never assume AWS SDK patterns apply directly
+- ❌ Never run AWS commands without the `--profile kirosh` flag
