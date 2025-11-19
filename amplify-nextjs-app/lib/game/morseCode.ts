@@ -122,3 +122,40 @@ export function encodeToMorse(text: string): string {
     .map((char) => CHARACTER_TO_MORSE[char] || char)
     .join(' ');
 }
+
+/**
+ * Unlocks a character based on Morse input
+ * @param sequence - The completed Morse code sequence
+ * @param currentUnlockedChars - Set of currently unlocked characters
+ * @returns Updated set of unlocked characters with the new character added
+ */
+export function unlockCharacterFromMorse(
+  sequence: string,
+  currentUnlockedChars: Set<string>
+): Set<string> {
+  const character = decodeMorseSequence(sequence);
+  
+  if (character) {
+    const newUnlockedChars = new Set(currentUnlockedChars);
+    newUnlockedChars.add(character.toLowerCase());
+    return newUnlockedChars;
+  }
+  
+  return currentUnlockedChars;
+}
+
+/**
+ * Gets all alphabetic characters (a-z)
+ * @returns Set of all lowercase alphabetic characters
+ */
+export function getAllAlphabeticCharacters(): Set<string> {
+  return new Set('abcdefghijklmnopqrstuvwxyz'.split(''));
+}
+
+/**
+ * Gets the initial unlocked characters for game start
+ * @returns Set containing 's' and 'o'
+ */
+export function getInitialUnlockedCharacters(): Set<string> {
+  return new Set(['s', 'o']);
+}

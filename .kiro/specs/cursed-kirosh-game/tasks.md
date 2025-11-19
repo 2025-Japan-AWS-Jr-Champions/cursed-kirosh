@@ -6,20 +6,20 @@
   - Create Morse code dictionary mapping
   - _Requirements: 1.1, 2.1_
 
-- [ ] 2. Implement Morse code system
-- [ ] 2.1 Create Morse code dictionary and validation logic
+- [x] 2. Implement Morse code system
+- [x] 2.1 Create Morse code dictionary and validation logic
   - Implement complete A-Z and 0-9 Morse code mappings
   - Create validation function for Morse sequences
   - Create character unlock logic based on Morse input
   - _Requirements: 2.4, 2.5_
 
-- [ ] 2.2 Build MorseInput component
+- [x] 2.2 Build MorseInput component
   - Create dot/dash input buttons with visual feedback
   - Display current Morse sequence being entered
   - Implement sequence completion detection
   - _Requirements: 2.1, 2.6_
 
-- [ ] 2.3 Integrate audio playback for Morse input
+- [x] 2.3 Integrate audio playback for Morse input
   - Load heartbeat.mp3 and scream.mp3 audio files
   - Play heartbeat sound on dot input
   - Play scream sound on dash input
