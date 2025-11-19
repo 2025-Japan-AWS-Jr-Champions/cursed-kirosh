@@ -37,7 +37,9 @@
         "browser_navigate",
         "browser_take_screenshot",
         "browser_click",
-        "browser_close"
+        "browser_close",
+        "browser_wait_for",
+        "browser_run_code"
       ]
     },
     "serena": {
