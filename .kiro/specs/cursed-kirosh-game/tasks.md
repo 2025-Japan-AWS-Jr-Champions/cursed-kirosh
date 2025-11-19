@@ -45,28 +45,28 @@
   - Store game start and end times
   - _Requirements: 7.1_
 
-- [ ] 4. Build terminal interface components
-- [ ] 4.1 Create Terminal component structure
+- [x] 4. Build terminal interface components
+- [x] 4.1 Create Terminal component structure
   - Set up main terminal container with Halloween styling
   - Implement cursor blinking animation
   - Create terminal prompt display
   - _Requirements: 1.1, 5.3_
 
-- [ ] 4.2 Build CommandPrompt component
+- [x] 4.2 Build CommandPrompt component
   - Implement text input with character filtering
   - Only allow unlocked characters to be typed
   - Display visual feedback for locked characters
   - Implement command history (up/down arrows)
   - _Requirements: 1.2, 1.4_
 
-- [ ] 4.3 Create OutputDisplay component
+- [x] 4.3 Create OutputDisplay component
   - Render terminal output history
   - Support different line types (command, output, error, system)
   - Implement auto-scroll to bottom
   - Apply color coding based on line type
   - _Requirements: 1.5_
 
-- [ ] 4.4 Implement curse effect animation
+- [x] 4.4 Implement curse effect animation
   - Add CSS animation for character jitter
   - Apply effect to typed characters after 2-second delay
   - Make characters move erratically
