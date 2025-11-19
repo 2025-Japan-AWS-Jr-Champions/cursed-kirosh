@@ -25,21 +25,21 @@
   - Play scream sound on dash input
   - _Requirements: 2.2, 2.3_
 
-- [ ] 3. Build game state management
-- [ ] 3.1 Create game state reducer and context
+- [x] 3. Build game state management
+- [x] 3.1 Create game state reducer and context
   - Define GameState interface with all required fields
   - Implement useReducer with all game actions
   - Create GameContext provider
   - Initialize with 's' and 'o' unlocked
   - _Requirements: 1.2, 10.1_
 
-- [ ] 3.2 Implement character lock/unlock system
+- [x] 3.2 Implement character lock/unlock system
   - Create functions to lock and unlock characters
   - Update Virtual Keyboard display on state changes
   - Handle "heartbeat" command for unlock all
   - _Requirements: 2.5, 6.2_
 
-- [ ] 3.3 Create timer and game progress tracking
+- [x] 3.3 Create timer and game progress tracking
   - Implement game timer from start to completion
   - Track completed commands and discovered secrets
   - Store game start and end times
