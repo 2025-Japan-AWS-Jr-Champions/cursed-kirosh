@@ -22,42 +22,48 @@ class AudioControllerImpl implements AudioController {
   public isLoaded = false;
 
   constructor() {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       this.initializeAudioContext();
     }
   }
 
   private initializeAudioContext() {
     try {
-      this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const AudioContextClass =
+        window.AudioContext ||
+        (window as typeof window & { webkitAudioContext: typeof AudioContext })
+          .webkitAudioContext;
+      this.audioContext = new AudioContextClass();
       this.gainNode = this.audioContext.createGain();
       this.gainNode.connect(this.audioContext.destination);
       this.gainNode.gain.value = this.volume;
     } catch (error) {
-      console.error('Failed to initialize audio context:', error);
+      console.error("Failed to initialize audio context:", error);
     }
   }
 
   async loadAudioFiles() {
     if (!this.audioContext) {
-      console.warn('Audio context not initialized');
+      console.warn("Audio context not initialized");
       return;
     }
 
     try {
       // Load heartbeat
-      const heartbeatResponse = await fetch('/audio/heartbeat.mp3');
+      const heartbeatResponse = await fetch("/audio/heartbeat.mp3");
       const heartbeatArrayBuffer = await heartbeatResponse.arrayBuffer();
-      this.heartbeatBuffer = await this.audioContext.decodeAudioData(heartbeatArrayBuffer);
+      this.heartbeatBuffer =
+        await this.audioContext.decodeAudioData(heartbeatArrayBuffer);
 
       // Load scream
-      const screamResponse = await fetch('/audio/scream.mp3');
+      const screamResponse = await fetch("/audio/scream.mp3");
       const screamArrayBuffer = await screamResponse.arrayBuffer();
-      this.screamBuffer = await this.audioContext.decodeAudioData(screamArrayBuffer);
+      this.screamBuffer =
+        await this.audioContext.decodeAudioData(screamArrayBuffer);
 
       this.isLoaded = true;
     } catch (error) {
-      console.error('Failed to load audio files:', error);
+      console.error("Failed to load audio files:", error);
     }
   }
 
@@ -68,7 +74,7 @@ class AudioControllerImpl implements AudioController {
 
     try {
       // Resume audio context if suspended (browser autoplay policy)
-      if (this.audioContext.state === 'suspended') {
+      if (this.audioContext.state === "suspended") {
         await this.audioContext.resume();
       }
 
@@ -77,7 +83,7 @@ class AudioControllerImpl implements AudioController {
       source.connect(this.gainNode);
       source.start(0);
     } catch (error) {
-      console.error('Failed to play heartbeat:', error);
+      console.error("Failed to play heartbeat:", error);
     }
   }
 
@@ -88,7 +94,7 @@ class AudioControllerImpl implements AudioController {
 
     try {
       // Resume audio context if suspended (browser autoplay policy)
-      if (this.audioContext.state === 'suspended') {
+      if (this.audioContext.state === "suspended") {
         await this.audioContext.resume();
       }
 
@@ -97,7 +103,7 @@ class AudioControllerImpl implements AudioController {
       source.connect(this.gainNode);
       source.start(0);
     } catch (error) {
-      console.error('Failed to play scream:', error);
+      console.error("Failed to play scream:", error);
     }
   }
 
@@ -116,7 +122,7 @@ class AudioControllerImpl implements AudioController {
       this.ambientSource.connect(this.gainNode);
       this.ambientSource.start(0);
     } catch (error) {
-      console.error('Failed to play ambient heartbeat:', error);
+      console.error("Failed to play ambient heartbeat:", error);
     }
   }
 
@@ -125,7 +131,7 @@ class AudioControllerImpl implements AudioController {
       try {
         this.ambientSource.stop();
         this.ambientSource.disconnect();
-      } catch (error) {
+      } catch (_error) {
         // Source might already be stopped
       }
       this.ambientSource = null;

@@ -72,34 +72,34 @@
   - Make characters move erratically
   - _Requirements: 5.2_
 
-- [ ] 5. Build Virtual Keyboard component
-- [ ] 5.1 Create keyboard layout and structure
+- [x] 5. Build Virtual Keyboard component
+- [x] 5.1 Create keyboard layout and structure
   - Implement QWERTY keyboard layout
   - Display all alphabetic characters and common symbols
   - Apply Halloween color scheme (orange/purple)
   - _Requirements: 1.3_
 
-- [ ] 5.2 Implement lock/unlock visual states
+- [x] 5.2 Implement lock/unlock visual states
   - Show locked characters in dark gray
   - Show unlocked characters in orange
   - Add "crack" animation when character unlocks
   - Update display based on game state
   - _Requirements: 1.3, 2.5_
 
-- [ ] 6. Implement command parser and execution
-- [ ] 6.1 Create command parser core
+- [x] 6. Implement command parser and execution
+- [x] 6.1 Create command parser core
   - Parse command strings into command and arguments
   - Implement command validation
   - Handle unknown commands with helpful messages
   - _Requirements: 3.5, 8.2_
 
-- [ ] 6.2 Implement basic commands (ls, cd, echo)
+- [x] 6.2 Implement basic commands (ls, cd, echo)
   - Create "ls" command to list files
   - Create "cd" command for directory navigation
   - Create "echo" command to display text
   - _Requirements: 3.1, 3.2, 3.3_
 
-- [ ] 6.3 Implement special commands (SOS, OS, OSS, SSO, SOSO)
+- [x] 6.3 Implement special commands (SOS, OS, OSS, SSO, SOSO)
   - Create "SOS" command with rescue event
   - Create "OS" command with boot sequence
   - Create "OSS" command with Morse-encoded projects
@@ -107,20 +107,20 @@
   - Create "SOSO" command with encouragement
   - _Requirements: 6.1, 6.3, 6.4, 6.5, 6.6_
 
-- [ ] 6.4 Implement "heartbeat" unlock all command
+- [x] 6.4 Implement "heartbeat" unlock all command
   - Detect "heartbeat" command
   - Unlock all alphabetic characters
   - Display confirmation message
   - _Requirements: 6.2_
 
-- [ ] 6.5 Implement "light" command
+- [x] 6.5 Implement "light" command
   - Toggle interface brightness
   - Apply lighter color scheme
   - Maintain readability
   - _Requirements: 5.5_
 
-- [ ] 7. Implement game endings
-- [ ] 7.1 Create ending detection logic
+- [x] 7. Implement game endings
+- [x] 7.1 Create ending detection logic
   - Detect "exit" command for Normal Ending
   - Detect "sudo" command for Kirosh Domination Ending
   - Detect "treat" command for Kiroween Ending
@@ -129,7 +129,7 @@
   - Detect "save kiro" command for True Ending
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6_
 
-- [ ] 7.2 Build EndingScreen component
+- [x] 7.2 Build EndingScreen component
   - Create unique visual for each ending type
   - Display completion time
   - Show ending-specific message and artwork

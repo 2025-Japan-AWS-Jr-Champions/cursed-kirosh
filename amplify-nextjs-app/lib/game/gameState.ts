@@ -40,6 +40,7 @@ export function createInitialGameState(): GameState {
     // Settings
     audioEnabled: true,
     hintsEnabled: true,
+    lightMode: false,
   };
 }
 
@@ -137,6 +138,12 @@ export function gameStateReducer(state: GameState, action: GameAction): GameStat
         ...state,
         ghostEventActive: false,
         ghostEventCount: state.ghostEventCount + 1,
+      };
+      
+    case 'TOGGLE_LIGHT_MODE':
+      return {
+        ...state,
+        lightMode: !state.lightMode,
       };
       
     case 'RESET_GAME':

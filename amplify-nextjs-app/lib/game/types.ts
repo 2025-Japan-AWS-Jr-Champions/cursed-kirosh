@@ -51,6 +51,7 @@ export interface GameState {
   // Settings
   audioEnabled: boolean;
   hintsEnabled: boolean;
+  lightMode: boolean;
 }
 
 export type GameAction =
@@ -65,6 +66,7 @@ export type GameAction =
   | { type: 'END_GAME'; ending: EndingType }
   | { type: 'TRIGGER_GHOST_EVENT' }
   | { type: 'RESOLVE_GHOST_EVENT'; success: boolean }
+  | { type: 'TOGGLE_LIGHT_MODE' }
   | { type: 'RESET_GAME' };
 
 export interface CommandResult {
