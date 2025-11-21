@@ -25,12 +25,14 @@ export default function MorseInput({
   const [feedback, setFeedback] = useState<string>('');
   const { playHeartbeat, playScream } = useAudio();
   const autoCompleteTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const feedbackTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Auto-complete sequence after delay
   useEffect(() => {
     // Clear existing timer
     if (autoCompleteTimerRef.current) {
       clearTimeout(autoCompleteTimerRef.current);
+      autoCompleteTimerRef.current = null;
     }
 
     // If there's a sequence and it's valid, set timer to auto-complete
@@ -42,18 +44,25 @@ export default function MorseInput({
           if (character) {
             setFeedback(`Unlocked: ${character.toUpperCase()}`);
             onMorseComplete(character);
+            setCurrentSequence('');
             
-            // Clear after showing feedback
-            setTimeout(() => {
-              setCurrentSequence('');
+            // Clear feedback after showing it
+            if (feedbackTimerRef.current) {
+              clearTimeout(feedbackTimerRef.current);
+            }
+            feedbackTimerRef.current = setTimeout(() => {
               setFeedback('');
             }, 1500);
           }
         } else {
           // Sequence is incomplete but valid - just clear it
           setFeedback('Incomplete sequence');
-          setTimeout(() => {
-            setCurrentSequence('');
+          setCurrentSequence('');
+          
+          if (feedbackTimerRef.current) {
+            clearTimeout(feedbackTimerRef.current);
+          }
+          feedbackTimerRef.current = setTimeout(() => {
             setFeedback('');
           }, 1000);
         }
@@ -64,9 +73,19 @@ export default function MorseInput({
     return () => {
       if (autoCompleteTimerRef.current) {
         clearTimeout(autoCompleteTimerRef.current);
+        autoCompleteTimerRef.current = null;
       }
     };
   }, [currentSequence, autoCompleteDelay, onMorseComplete]);
+
+  // Cleanup feedback timer on unmount
+  useEffect(() => {
+    return () => {
+      if (feedbackTimerRef.current) {
+        clearTimeout(feedbackTimerRef.current);
+      }
+    };
+  }, []);
 
   const handleInput = async (type: 'dot' | 'dash') => {
     if (disabled) return;
@@ -101,9 +120,14 @@ export default function MorseInput({
   };
 
   const handleClear = () => {
-    // Clear the auto-complete timer
+    // Clear both timers
     if (autoCompleteTimerRef.current) {
       clearTimeout(autoCompleteTimerRef.current);
+      autoCompleteTimerRef.current = null;
+    }
+    if (feedbackTimerRef.current) {
+      clearTimeout(feedbackTimerRef.current);
+      feedbackTimerRef.current = null;
     }
     setCurrentSequence('');
     setFeedback('');
