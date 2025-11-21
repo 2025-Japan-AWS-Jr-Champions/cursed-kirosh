@@ -149,6 +149,9 @@ function Key({ character, isUnlocked, onClick, isSymbol = false }: KeyProps) {
       // Reset animation state after it completes
       const timer = setTimeout(() => setJustUnlocked(false), 600);
       return () => clearTimeout(timer);
+    } else if (!isUnlocked && justUnlocked) {
+      // Reset animation state when character is locked again
+      setJustUnlocked(false);
     }
   }, [isUnlocked, justUnlocked]);
 
