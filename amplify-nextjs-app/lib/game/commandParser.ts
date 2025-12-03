@@ -363,25 +363,54 @@ function executeLight(gameState: GameState): CommandExecutionResult {
  */
 function executeHelp(): CommandResult {
   const output = `
-Available Commands:
+╔════════════════════════════════════════╗
+║          HELP - CURSED TERMINAL        ║
+╚════════════════════════════════════════╝
+
+📋 BASIC COMMANDS:
   ls              - List files in current directory
   cd <dir>        - Change directory
   echo <text>     - Display text
   help            - Show this help message
-  
-Special Commands:
+
+🔮 SPECIAL COMMANDS:
   sos             - Send distress signal
-  heartbeat       - Unlock all characters
-  light           - Toggle light mode
-  
-Endings:
+  os              - Boot sequence
+  oss             - Open source projects (Morse encoded)
+  sso             - Single sign-on (warning!)
+  soso            - Encouragement
+  heartbeat       - Unlock all alphabetic characters
+  light           - Toggle light/dark mode
+
+🎃 ENDINGS (Multiple ways to escape!):
   exit            - Normal ending
   sudo            - Kirosh Domination ending
   treat           - Kiroween ending
   kiro            - Kiro Editor ending
-  save kiro       - True ending
+  echo Hello, world!  - Engineer ending
+  save kiro       - True ending (the best one!)
+
+📡 MORSE CODE INPUT:
+  • Click DOT (•) for short signal (heartbeat sound)
+  • Click DASH (—) for long signal (scream sound)
+  • Sequences auto-complete after 1 second
+  • Each letter has a unique Morse pattern
   
-Hint: Use Morse code (dots and dashes) to unlock more characters!
+  Examples:
+    S = • • •  (dot dot dot)
+    O = — — —  (dash dash dash)
+    E = •      (dot)
+    T = —      (dash)
+
+💡 GAMEPLAY TIPS:
+  • Start with 's' and 'o' unlocked
+  • Use Morse code to unlock more characters
+  • Try typing 'sos' with your starting characters
+  • Explore different commands to discover secrets
+  • Watch out for ghosts asking "trick or treat"!
+  • Multiple endings mean multiple ways to win
+
+Good luck escaping the curse! 🎃
   `.trim();
 
   return {

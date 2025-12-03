@@ -4,6 +4,7 @@ import React from 'react';
 import { useGameContext } from '@/lib/game/GameContext';
 import { OutputDisplay } from './OutputDisplay';
 import { CommandPrompt } from './CommandPrompt';
+import { useHints } from '@/hooks/useHints';
 
 interface TerminalProps {
   onCommand?: (command: string) => void;
@@ -16,8 +17,12 @@ interface TerminalProps {
  */
 export function Terminal({ onCommand, disabled = false }: TerminalProps) {
   const { state, dispatch } = useGameContext();
+  const { updateActivity } = useHints();
 
   const handleCommandSubmit = (command: string) => {
+    // Update activity time
+    updateActivity();
+    
     // Add command to history
     dispatch({
       type: 'SUBMIT_COMMAND',

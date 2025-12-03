@@ -37,6 +37,11 @@ export function createInitialGameState(): GameState {
     currentEnding: null,
     gameComplete: false,
     
+    // Hints
+    lastActivityTime: Date.now(),
+    lastHintTime: 0,
+    hintsShown: new Set(),
+    
     // Settings
     audioEnabled: true,
     hintsEnabled: true,
@@ -144,6 +149,19 @@ export function gameStateReducer(state: GameState, action: GameAction): GameStat
       return {
         ...state,
         lightMode: !state.lightMode,
+      };
+      
+    case 'UPDATE_ACTIVITY':
+      return {
+        ...state,
+        lastActivityTime: Date.now(),
+      };
+      
+    case 'SHOW_HINT':
+      return {
+        ...state,
+        lastHintTime: Date.now(),
+        hintsShown: new Set([...state.hintsShown, action.hintId]),
       };
       
     case 'RESET_GAME':

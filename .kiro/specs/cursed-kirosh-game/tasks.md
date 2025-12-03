@@ -176,20 +176,20 @@
   - Include in credits section
   - _Requirements: 5.4_
 
-- [ ] 10. Implement hint system
-- [ ] 10.1 Create contextual hint logic
+- [x] 10. Implement hint system
+- [x] 10.1 Create contextual hint logic
   - Determine appropriate hints based on game progress
   - Track player inactivity
   - Display hints after inactivity timeout
   - _Requirements: 8.1, 8.4_
 
-- [ ] 10.2 Implement help command
+- [x] 10.2 Implement help command
   - Display available commands
   - Show Morse code input instructions
   - Provide gameplay tips
   - _Requirements: 8.2_
 
-- [ ] 10.3 Add visual cues for Morse input
+- [x] 10.3 Add visual cues for Morse input
   - Highlight Morse input area
   - Show example Morse sequences
   - Provide feedback on progress

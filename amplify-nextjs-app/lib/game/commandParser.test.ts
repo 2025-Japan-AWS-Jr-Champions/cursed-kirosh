@@ -188,9 +188,10 @@ describe("executeCommand - help", () => {
     const result = executeCommand(parsed, gameState);
 
     expect(result.success).toBe(true);
-    expect(result.output).toContain("Available Commands");
+    expect(result.output).toContain("BASIC COMMANDS");
     expect(result.output).toContain("ls");
     expect(result.output).toContain("echo");
+    expect(result.output).toContain("MORSE CODE INPUT");
   });
 });
 
