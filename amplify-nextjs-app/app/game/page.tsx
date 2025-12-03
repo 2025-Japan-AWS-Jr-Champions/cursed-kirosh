@@ -213,11 +213,27 @@ function GameContent() {
         </div>
       </div>
 
+      {/* Audio Attribution Footer */}
+      <footer className="game-footer">
+        <div className="attribution-text">
+          Sound effects by{" "}
+          <a
+            href="https://otologic.jp/free/license.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="attribution-link"
+          >
+            OtoLogic
+          </a>
+        </div>
+      </footer>
+
       <style jsx>{`
         .game-page {
           min-height: 100vh;
           background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 50%, #0a0a0a 100%);
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
           padding: 20px;
@@ -299,6 +315,32 @@ function GameContent() {
           .game-content {
             grid-template-columns: 1fr;
           }
+        }
+        
+        .game-footer {
+          margin-top: 32px;
+          padding: 16px;
+          text-align: center;
+          border-top: 1px solid rgba(153, 51, 255, 0.3);
+        }
+        
+        .attribution-text {
+          font-size: 14px;
+          color: #9933ff;
+          font-family: 'Courier New', monospace;
+        }
+        
+        .attribution-link {
+          color: #ff6600;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          border-bottom: 1px solid transparent;
+        }
+        
+        .attribution-link:hover {
+          color: #ff8833;
+          border-bottom-color: #ff8833;
+          text-shadow: 0 0 10px rgba(255, 102, 0, 0.5);
         }
       `}</style>
     </div>

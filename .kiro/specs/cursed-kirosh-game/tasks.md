@@ -157,20 +157,20 @@
   - Update game state accordingly
   - _Requirements: 9.2, 9.3, 9.5_
 
-- [ ] 9. Implement audio system
-- [ ] 9.1 Create AudioManager component
+- [x] 9. Implement audio system
+- [x] 9.1 Create AudioManager component
   - Set up Web Audio API context
   - Load and cache audio files
   - Provide audio control interface
   - _Requirements: 2.2, 2.3_
 
-- [ ] 9.2 Implement ambient heartbeat loop
+- [x] 9.2 Implement ambient heartbeat loop
   - Play heartbeat sound at regular intervals
   - Control volume and timing
   - Allow enable/disable toggle
   - _Requirements: 5.1_
 
-- [ ] 9.3 Add audio attribution
+- [x] 9.3 Add audio attribution
   - Display "Sound effects by OtoLogic" in footer
   - Link to https://otologic.jp/free/license.html
   - Include in credits section
