@@ -7,13 +7,14 @@ import { CommandPrompt } from './CommandPrompt';
 
 interface TerminalProps {
   onCommand?: (command: string) => void;
+  disabled?: boolean;
 }
 
 /**
  * Terminal Component
  * Main terminal interface with Halloween styling, cursor animation, and prompt display
  */
-export function Terminal({ onCommand }: TerminalProps) {
+export function Terminal({ onCommand, disabled = false }: TerminalProps) {
   const { state, dispatch } = useGameContext();
 
   const handleCommandSubmit = (command: string) => {
@@ -70,9 +71,16 @@ export function Terminal({ onCommand }: TerminalProps) {
         <CommandPrompt
           unlockedChars={state.unlockedChars}
           onSubmit={handleCommandSubmit}
-          disabled={state.gameComplete}
+          disabled={state.gameComplete || disabled}
           commandHistory={state.commandHistory}
         />
+        
+        {/* Show message when disabled by ghost event */}
+        {disabled && !state.gameComplete && (
+          <div className="terminal-disabled-message">
+            👻 Ghost event active - use the ghost input above!
+          </div>
+        )}
       </div>
       
       <style jsx>{`
@@ -195,6 +203,24 @@ export function Terminal({ onCommand }: TerminalProps) {
         
         .terminal-body::-webkit-scrollbar-thumb:hover {
           background: #ff6600;
+        }
+        
+        .terminal-disabled-message {
+          color: #9933ff;
+          font-size: 14px;
+          font-style: italic;
+          margin-top: 8px;
+          text-align: center;
+          animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
         }
       `}</style>
     </div>

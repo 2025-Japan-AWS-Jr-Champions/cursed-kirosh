@@ -10,3 +10,4 @@ export { CursedText, useCursedText } from './CursedText';
 export { default as MorseInput } from './MorseInput';
 export { VirtualKeyboard } from './VirtualKeyboard';
 export { default as EndingScreen } from './EndingScreen';
+export { GhostEvent } from './GhostEvent';

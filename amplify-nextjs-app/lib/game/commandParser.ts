@@ -442,9 +442,29 @@ You are no longer trapped. You ARE the trap.
 }
 
 /**
- * Execute treat command - Kiroween Ending
+ * Execute treat command - Kiroween Ending or Ghost Event Response
  */
-function executeTreat(): CommandExecutionResult {
+function executeTreat(gameState: GameState): CommandExecutionResult {
+  // If ghost event is active, resolve it successfully
+  if (gameState.ghostEventActive) {
+    const output = `
+🎃 TREAT ACCEPTED! 🎃
+
+The ghost is satisfied with your offering.
+Your unlocked characters remain safe.
+
+The ghost fades away... for now.
+    `.trim();
+
+    return {
+      success: true,
+      output,
+      type: "system",
+      actions: [{ type: "RESOLVE_GHOST_EVENT", success: true }],
+    };
+  }
+
+  // Otherwise, trigger Kiroween Ending
   const output = `
 ╔════════════════════════════════════════╗
 ║         KIROWEEN ENDING                ║
@@ -651,7 +671,7 @@ Freedom through "Hello, world!"
       return executeSudo();
 
     case "treat":
-      return executeTreat();
+      return executeTreat(gameState);
 
     case "kiro":
       return executeKiro();

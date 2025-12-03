@@ -136,21 +136,21 @@
   - Provide restart and leaderboard buttons
   - _Requirements: 4.7_
 
-- [ ] 8. Implement ghost "trick or treat" mechanic
-- [ ] 8.1 Create GhostEvent component
+- [x] 8. Implement ghost "trick or treat" mechanic
+- [x] 8.1 Create GhostEvent component
   - Display ghost.png image with animation
   - Show "trick or treat" prompt
   - Implement countdown timer
   - Add ©DESIGNALIKIE attribution
   - _Requirements: 9.1_
 
-- [ ] 8.2 Implement ghost event triggering
+- [x] 8.2 Implement ghost event triggering
   - Trigger ghost appearance at random intervals
   - Provide visual warning before appearance
   - Track ghost event count
   - _Requirements: 9.4_
 
-- [ ] 8.3 Handle treat/trick responses
+- [x] 8.3 Handle treat/trick responses
   - Detect "treat" command during ghost event
   - Maintain unlocked characters on successful treat
   - Re-lock characters on failed treat (timeout)

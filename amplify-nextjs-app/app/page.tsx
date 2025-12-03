@@ -1,37 +1,37 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { generateClient } from 'aws-amplify/data';
-import type { Schema } from '@/amplify/data/resource';
-import { useAuthenticator } from '@aws-amplify/ui-react';
+// import { useState, useEffect } from 'react';
+// import { generateClient } from 'aws-amplify/data';
+// import type { Schema } from '@/amplify/data/resource';
+// import { useAuthenticator } from '@aws-amplify/ui-react';
 
-const client = generateClient<Schema>();
+// const client = generateClient<Schema>();
 
 export default function Home() {
-  const [todos, setTodos] = useState<Array<Schema['Todo']['type']>>([]);
-  const [content, setContent] = useState('');
-  const { user, signOut } = useAuthenticator((context) => [context.user]);
+  // const [todos, setTodos] = useState<Array<Schema['Todo']['type']>>([]);
+  // const [content, setContent] = useState('');
+  // const { user, signOut } = useAuthenticator((context) => [context.user]);
 
-  useEffect(() => {
-    const subscription = client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
-    });
+  // useEffect(() => {
+  //   const subscription = client.models.Todo.observeQuery().subscribe({
+  //     next: (data) => setTodos([...data.items]),
+  //   });
 
-    return () => subscription.unsubscribe();
-  }, []);
+  //   return () => subscription.unsubscribe();
+  // }, []);
 
-  async function createTodo() {
-    if (!content.trim()) return;
-    await client.models.Todo.create({
-      content,
-      isDone: false,
-    });
-    setContent('');
-  }
+  // async function createTodo() {
+  //   if (!content.trim()) return;
+  //   await client.models.Todo.create({
+  //     content,
+  //     isDone: false,
+  //   });
+  //   setContent('');
+  // }
 
-  async function deleteTodo(id: string) {
-    await client.models.Todo.delete({ id });
-  }
+  // async function deleteTodo(id: string) {
+  //   await client.models.Todo.delete({ id });
+  // }
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-black p-8">
@@ -40,7 +40,7 @@ export default function Home() {
           <h1 className="text-3xl font-bold text-black dark:text-white">
             My Todos
           </h1>
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <span className="text-sm text-zinc-600 dark:text-zinc-400">
               {user?.signInDetails?.loginId}
             </span>
@@ -50,10 +50,10 @@ export default function Home() {
             >
               Sign Out
             </button>
-          </div>
+          </div> */}
         </div>
 
-        <div className="mb-6 flex gap-2">
+        {/* <div className="mb-6 flex gap-2">
           <input
             type="text"
             value={content}
@@ -85,7 +85,7 @@ export default function Home() {
               </button>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
     </div>
   );

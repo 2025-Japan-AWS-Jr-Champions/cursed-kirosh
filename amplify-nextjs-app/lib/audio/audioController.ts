@@ -9,6 +9,7 @@ export interface AudioController {
   playAmbientHeartbeat: () => void;
   stopAmbientHeartbeat: () => void;
   setVolume: (volume: number) => void;
+  loadAudioFiles: () => Promise<void>;
   isLoaded: boolean;
 }
 
