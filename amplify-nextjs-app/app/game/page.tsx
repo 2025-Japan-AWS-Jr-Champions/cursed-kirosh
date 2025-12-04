@@ -216,22 +216,30 @@ function GameContent() {
         </div>
       </div>
 
-      {/* Audio Attribution Footer */}
+      {/* Attribution Footer */}
       <footer className="game-footer">
-        <div className="attribution-text">
-          Sound effects by{" "}
-          <a
-            href="https://otologic.jp/free/license.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="attribution-link"
-          >
-            OtoLogic
-          </a>
+        <div className="attribution-container">
+          <div className="attribution-item">
+            <span className="attribution-label">Sound Effects:</span>{" "}
+            <a
+              href="https://otologic.jp/free/license.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="attribution-link"
+            >
+              OtoLogic
+            </a>
+          </div>
+          <div className="attribution-divider">•</div>
+          <div className="attribution-item">
+            <span className="attribution-label">Ghost Image:</span>{" "}
+            <span className="attribution-value">©DESIGNALIKIE</span>
+          </div>
         </div>
       </footer>
 
       <style jsx>{`
+        /* Main Game Page Layout */
         .game-page {
           min-height: 100vh;
           background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 50%, #0a0a0a 100%);
@@ -240,13 +248,16 @@ function GameContent() {
           align-items: center;
           justify-content: center;
           padding: 20px;
+          font-family: 'Courier New', monospace;
         }
         
         .game-container {
           max-width: 1400px;
           width: 100%;
+          min-width: 1024px; /* Desktop-optimized minimum width */
         }
         
+        /* Header Section */
         .game-header {
           text-align: center;
           margin-bottom: 32px;
@@ -285,63 +296,114 @@ function GameContent() {
         .game-title {
           font-size: 48px;
           font-weight: bold;
-          color: #ff6600;
+          color: #ff6600; /* Halloween orange */
           text-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
           letter-spacing: 8px;
           margin-bottom: 8px;
           font-family: 'Courier New', monospace;
+          animation: titleGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes titleGlow {
+          0%, 100% {
+            text-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
+          }
+          50% {
+            text-shadow: 0 0 30px rgba(255, 102, 0, 0.8),
+                         0 0 40px rgba(255, 102, 0, 0.4);
+          }
         }
         
         .game-subtitle {
           font-size: 18px;
-          color: #9933ff;
+          color: #9933ff; /* Purple */
           font-style: italic;
           text-shadow: 0 0 10px rgba(153, 51, 255, 0.5);
         }
         
+        /* Side-by-Side Layout: Terminal and Keyboard */
         .game-content {
           display: grid;
-          grid-template-columns: 1fr 400px;
+          grid-template-columns: 1fr 400px; /* Terminal takes remaining space, keyboard fixed width */
           gap: 24px;
           align-items: start;
+          margin-bottom: 24px;
         }
         
         .terminal-section {
           width: 100%;
+          min-height: 500px;
         }
         
         .keyboard-section {
           width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
         }
         
+        /* Responsive: Stack on smaller screens (below 1024px) */
         @media (max-width: 1024px) {
+          .game-container {
+            min-width: auto;
+          }
+          
           .game-content {
             grid-template-columns: 1fr;
           }
+          
+          .keyboard-section {
+            max-width: 600px;
+            margin: 0 auto;
+          }
         }
         
+        /* Footer with Attributions */
         .game-footer {
           margin-top: 32px;
-          padding: 16px;
+          padding: 20px;
           text-align: center;
-          border-top: 1px solid rgba(153, 51, 255, 0.3);
+          border-top: 2px solid rgba(153, 51, 255, 0.3);
+          background: rgba(26, 10, 26, 0.3);
         }
         
-        .attribution-text {
+        .attribution-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+          flex-wrap: wrap;
+        }
+        
+        .attribution-item {
           font-size: 14px;
-          color: #9933ff;
+          color: #9933ff; /* Purple */
           font-family: 'Courier New', monospace;
         }
         
+        .attribution-label {
+          color: #ff8833; /* Light orange */
+          font-weight: bold;
+        }
+        
+        .attribution-value {
+          color: #ff6600; /* Halloween orange */
+        }
+        
+        .attribution-divider {
+          color: #9933ff;
+          font-size: 18px;
+        }
+        
         .attribution-link {
-          color: #ff6600;
+          color: #ff6600; /* Halloween orange */
           text-decoration: none;
           transition: all 0.3s ease;
           border-bottom: 1px solid transparent;
         }
         
         .attribution-link:hover {
-          color: #ff8833;
+          color: #ff8833; /* Light orange */
           border-bottom-color: #ff8833;
           text-shadow: 0 0 10px rgba(255, 102, 0, 0.5);
         }

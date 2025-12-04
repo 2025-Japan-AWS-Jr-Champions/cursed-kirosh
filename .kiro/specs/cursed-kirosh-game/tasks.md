@@ -229,15 +229,15 @@
   - Clear saved state on game completion
   - _Requirements: 7.5_
 
-- [ ] 13. Create landing and layout pages
-- [ ] 13.1 Build landing page
+- [x] 13. Create landing and layout pages
+- [x] 13.1 Build landing page
   - Create welcome screen with game introduction
   - Add "Start Game" button
   - Display game instructions
   - Show attribution credits
   - _Requirements: 1.1_
 
-- [ ] 13.2 Create game layout
+- [x] 13.2 Create game layout
   - Set up side-by-side terminal and keyboard layout
   - Apply Halloween color scheme (purple/orange)
   - Add footer with attributions
