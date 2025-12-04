@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { GameProvider, useGameContext } from "@/lib/game/GameContext";
 import {
   Terminal,
@@ -26,6 +27,7 @@ export default function GamePage() {
 }
 
 function GameContent() {
+  const router = useRouter();
   const { state, dispatch } = useGameContext();
 
   // Initialize ghost event system
@@ -126,8 +128,7 @@ function GameContent() {
   };
 
   const handleViewLeaderboard = () => {
-    // TODO: Navigate to leaderboard page (will be implemented in task 11)
-    console.log("View leaderboard clicked");
+    router.push("/leaderboard");
   };
 
   // TEST FUNCTION: Manually trigger ghost event
@@ -159,6 +160,8 @@ function GameContent() {
           <EndingScreen
             ending={state.currentEnding}
             completionTime={state.endTime - state.startTime}
+            unlockedCharCount={state.unlockedChars.size}
+            secretsFound={state.discoveredSecrets.size}
             onRestart={handleRestart}
             onViewLeaderboard={handleViewLeaderboard}
           />

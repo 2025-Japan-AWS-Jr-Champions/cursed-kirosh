@@ -195,21 +195,21 @@
   - Provide feedback on progress
   - _Requirements: 8.3, 8.5_
 
-- [ ] 11. Set up Amplify backend for leaderboard
-- [ ] 11.1 Configure Amplify Data model
+- [x] 11. Set up Amplify backend for leaderboard
+- [x] 11.1 Configure Amplify Data model
   - Define LeaderboardEntry schema
   - Set up public read, authenticated create permissions
   - Deploy data model
   - _Requirements: 7.2_
 
-- [ ] 11.2 Implement leaderboard submission
+- [x] 11.2 Implement leaderboard submission
   - Prompt for player name on game completion
   - Submit score with completion time and ending type
   - Handle network errors gracefully
   - Store pending submissions locally if offline
   - _Requirements: 7.2, 7.3_
 
-- [ ] 11.3 Create leaderboard display page
+- [x] 11.3 Create leaderboard display page
   - Fetch and display top scores
   - Sort by completion time (ascending)
   - Show player name, time, and ending type
