@@ -80,6 +80,7 @@ export type GameAction =
   | { type: "TOGGLE_LIGHT_MODE" }
   | { type: "UPDATE_ACTIVITY" }
   | { type: "SHOW_HINT"; hintId: string }
+  | { type: "DISCOVER_SECRET"; secret: string }
   | { type: "RESET_GAME" };
 
 export interface CommandResult {

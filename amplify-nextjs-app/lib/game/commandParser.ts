@@ -206,7 +206,7 @@ function executeEcho(args: string[]): CommandResult {
 /**
  * Execute SOS command - rescue event
  */
-function executeSOS(): CommandResult {
+function executeSOS(): CommandExecutionResult {
   const output = `
 ╔════════════════════════════════════════╗
 ║         DISTRESS SIGNAL SENT           ║
@@ -223,13 +223,14 @@ Perhaps there are other ways to escape...
     success: true,
     output,
     type: "system",
+    actions: [{ type: "DISCOVER_SECRET", secret: "sos" }],
   };
 }
 
 /**
  * Execute OS command - boot sequence
  */
-function executeOS(): CommandResult {
+function executeOS(): CommandExecutionResult {
   const output = `
 Initializing Kirosh Operating System...
 [████████████████████████████] 100%
@@ -246,13 +247,14 @@ Type 'help' if you dare seek guidance.
     success: true,
     output,
     type: "system",
+    actions: [{ type: "DISCOVER_SECRET", secret: "os" }],
   };
 }
 
 /**
  * Execute OSS command - Morse-encoded open source projects
  */
-function executeOSS(): CommandResult {
+function executeOSS(): CommandExecutionResult {
   const output = `
 Famous Open Source Projects (Morse Encoded):
 
@@ -269,13 +271,14 @@ The spirits of open source guide you...
     success: true,
     output,
     type: "output",
+    actions: [{ type: "DISCOVER_SECRET", secret: "oss" }],
   };
 }
 
 /**
  * Execute SSO command - game over
  */
-function executeSSO(): CommandResult {
+function executeSSO(): CommandExecutionResult {
   const output = `
 Single Sign-On... to the void.
 
@@ -289,13 +292,14 @@ GAME OVER
     success: true,
     output,
     type: "error",
+    actions: [{ type: "DISCOVER_SECRET", secret: "sso" }],
   };
 }
 
 /**
  * Execute SOSO command - encouragement
  */
-function executeSOSO(): CommandResult {
+function executeSOSO(): CommandExecutionResult {
   const output = `
 So-so? Don't give up!
 
@@ -310,6 +314,7 @@ Keep trying. The escape is within reach.
     success: true,
     output,
     type: "system",
+    actions: [{ type: "DISCOVER_SECRET", secret: "soso" }],
   };
 }
 
@@ -318,10 +323,13 @@ Keep trying. The escape is within reach.
  */
 function executeHeartbeat(): CommandExecutionResult {
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
-  const actions: GameAction[] = alphabet.split("").map((char) => ({
-    type: "UNLOCK_CHARACTER",
-    character: char,
-  }));
+  const actions: GameAction[] = [
+    { type: "DISCOVER_SECRET", secret: "heartbeat" },
+    ...alphabet.split("").map((char) => ({
+      type: "UNLOCK_CHARACTER" as const,
+      character: char,
+    })),
+  ];
 
   const output = `
 ♥ HEARTBEAT DETECTED ♥
