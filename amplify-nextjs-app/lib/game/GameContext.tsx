@@ -1,7 +1,8 @@
 'use client';
 
-import React, { createContext, useContext, useReducer, type ReactNode } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
 import { gameStateReducer, createInitialGameState } from './gameState';
+import { saveGameState, loadSavedGameState, clearSavedGameState } from '../utils/localStorage';
 import type { GameState, GameAction } from './types';
 
 interface GameContextValue {
@@ -21,6 +22,35 @@ interface GameProviderProps {
  */
 export function GameProvider({ children }: GameProviderProps) {
   const [state, dispatch] = useReducer(gameStateReducer, createInitialGameState());
+
+  // Load saved state on mount
+  useEffect(() => {
+    const savedState = loadSavedGameState();
+    if (savedState) {
+      dispatch({ type: 'LOAD_SAVED_STATE', state: savedState });
+    }
+  }, []);
+
+  // Save state on changes (debounced)
+  useEffect(() => {
+    // Don't save initial state or completed games
+    if (!state.startTime || state.gameComplete) {
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      saveGameState(state);
+    }, 1000); // Debounce saves by 1 second
+
+    return () => clearTimeout(timeoutId);
+  }, [state]);
+
+  // Clear saved state when game completes
+  useEffect(() => {
+    if (state.gameComplete) {
+      clearSavedGameState();
+    }
+  }, [state.gameComplete]);
 
   return (
     <GameContext.Provider value={{ state, dispatch }}>

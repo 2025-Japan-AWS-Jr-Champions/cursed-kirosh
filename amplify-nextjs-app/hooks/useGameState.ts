@@ -5,6 +5,7 @@ import { useGameContext } from '@/lib/game/GameContext';
 import { createOutputLine } from '@/lib/game/gameState';
 import { getAllAlphabeticCharacters } from '@/lib/game/morseCode';
 import { getGameStatistics, getProgressSummary, createLeaderboardEntry } from '@/lib/game/progressTracking';
+import { hasSavedGameState, clearSavedGameState, loadSavedGameState } from '@/lib/utils/localStorage';
 import type { EndingType, OutputLine } from '@/lib/game/types';
 
 /**
@@ -122,6 +123,22 @@ export function useGameState() {
     return state.discoveredSecrets.has(secret.toLowerCase());
   }, [state.discoveredSecrets]);
 
+  // Saved state operations
+  const checkHasSavedState = useCallback(() => {
+    return hasSavedGameState();
+  }, []);
+
+  const loadSavedState = useCallback(() => {
+    const savedState = loadSavedGameState();
+    if (savedState) {
+      dispatch({ type: 'LOAD_SAVED_STATE', state: savedState });
+    }
+  }, [dispatch]);
+
+  const clearSavedState = useCallback(() => {
+    clearSavedGameState();
+  }, []);
+
   return {
     // State
     state,
@@ -161,5 +178,10 @@ export function useGameState() {
     getLeaderboardEntry,
     hasCompletedCommand,
     hasDiscoveredSecret,
+    
+    // Saved state operations
+    checkHasSavedState,
+    loadSavedState,
+    clearSavedState,
   };
 }

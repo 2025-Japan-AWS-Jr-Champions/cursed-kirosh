@@ -170,6 +170,12 @@ export function gameStateReducer(state: GameState, action: GameAction): GameStat
         discoveredSecrets: new Set([...state.discoveredSecrets, action.secret.toLowerCase()]),
       };
       
+    case 'LOAD_SAVED_STATE':
+      return {
+        ...state,
+        ...action.state,
+      };
+      
     case 'RESET_GAME':
       return createInitialGameState();
       

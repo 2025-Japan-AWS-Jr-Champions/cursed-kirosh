@@ -81,6 +81,7 @@ export type GameAction =
   | { type: "UPDATE_ACTIVITY" }
   | { type: "SHOW_HINT"; hintId: string }
   | { type: "DISCOVER_SECRET"; secret: string }
+  | { type: "LOAD_SAVED_STATE"; state: Partial<GameState> }
   | { type: "RESET_GAME" };
 
 export interface CommandResult {
