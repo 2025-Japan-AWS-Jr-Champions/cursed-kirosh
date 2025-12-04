@@ -1,18 +1,20 @@
 version: 1
-frontend:
-  phases:
-    preBuild:
-      commands:
-        - npm cache clean --force
-        - cd amplify && npm ci
-        - cd ..
-        - npm ci
-    build:
-      commands:
-        - npm run build
-  artifacts:
-    baseDirectory: .next
-    files:
-      - '**/*'
-  cache:
-    paths: []
+applications:
+  - frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm cache clean --force
+            - cd amplify && npm ci
+            - cd ..
+            - npm ci
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: .next
+        files:
+          - '**/*'
+      cache:
+        paths: []
+    appRoot: amplify-nextjs-app
