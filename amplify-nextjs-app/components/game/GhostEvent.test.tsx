@@ -35,7 +35,7 @@ describe('GhostEvent Component', () => {
     );
 
     expect(screen.getByText('TRICK OR TREAT?')).toBeInTheDocument();
-    expect(screen.getByText('Type "treat" to appease the ghost!')).toBeInTheDocument();
+    expect(screen.getByText(/Type "treat" carefully/i)).toBeInTheDocument();
     expect(screen.getByText('©DESIGNALIKIE')).toBeInTheDocument();
   });
 
@@ -78,7 +78,7 @@ describe('GhostEvent Component', () => {
       />
     );
 
-    expect(screen.getByText('Your unlocked characters are at stake...')).toBeInTheDocument();
+    expect(screen.getByText(/Character restrictions lifted/i)).toBeInTheDocument();
   });
 
   it('should reset timer when isActive changes from false to true', () => {

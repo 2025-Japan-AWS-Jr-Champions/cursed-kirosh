@@ -267,32 +267,32 @@
   - Test audio playback across browsers
   - _Requirements: 5.1, 5.3_
 
-- [ ] 15. Testing and bug fixes
-- [ ] 15.1 Test all game endings
+- [x] 15. Testing and bug fixes
+- [x] 15.1 Test all game endings
   - Verify each ending triggers correctly
   - Test ending screen displays
   - Verify completion time tracking
   - _Requirements: 4.1-4.7_
 
-- [ ] 15.2 Test Morse code system
+- [x] 15.2 Test Morse code system
   - Verify all character mappings work
   - Test invalid sequence handling
   - Verify character unlock functionality
   - _Requirements: 2.1-2.6_
 
-- [ ] 15.3 Test ghost event mechanic
+- [x] 15.3 Test ghost event mechanic
   - Verify ghost appearance timing
   - Test treat/trick responses
   - Verify character re-locking on trick
   - _Requirements: 9.1-9.5_
 
-- [ ] 15.4 Test leaderboard functionality
+- [x] 15.4 Test leaderboard functionality
   - Verify score submission
   - Test leaderboard display
   - Test offline behavior
   - _Requirements: 7.1-7.5_
 
-- [ ] 15.5 Cross-browser testing
+- [x] 15.5 Cross-browser testing
   - Test in Chrome, Firefox, Safari, Edge
   - Verify audio playback compatibility
   - Test visual rendering consistency

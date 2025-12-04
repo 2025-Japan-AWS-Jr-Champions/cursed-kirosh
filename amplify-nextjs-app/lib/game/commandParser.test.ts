@@ -149,10 +149,13 @@ describe("executeCommand - heartbeat", () => {
     expect(result.success).toBe(true);
     expect(result.output).toContain("unlocked");
     expect(result.actions).toBeDefined();
-    expect(result.actions?.length).toBe(26); // a-z
+    expect(result.actions?.length).toBe(27); // 1 DISCOVER_SECRET + 26 UNLOCK_CHARACTER
 
-    // Check that all actions are UNLOCK_CHARACTER
-    result.actions?.forEach((action) => {
+    // Check that first action is DISCOVER_SECRET
+    expect(result.actions?.[0]?.type).toBe("DISCOVER_SECRET");
+    
+    // Check that remaining actions are UNLOCK_CHARACTER
+    result.actions?.slice(1).forEach((action) => {
       expect(action.type).toBe("UNLOCK_CHARACTER");
     });
   });
