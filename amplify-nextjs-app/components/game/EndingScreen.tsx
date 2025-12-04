@@ -59,7 +59,7 @@ function getEndingContent(ending: EndingType): {
       return {
         title: "Kiroween Ending",
         message:
-          "You offered treats to the spirits. The ghosts are satisfied, and Halloween magic has set you free.",
+          "You offered treats to the spirits. The ghosts are satisfied, and Kiroween magic has set you free.",
         artwork: "🎃",
         color: "text-orange-500",
       };

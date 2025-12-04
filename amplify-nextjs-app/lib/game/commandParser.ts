@@ -511,7 +511,7 @@ The ghost fades away... for now.
 
 You offered a treat to the spirits.
 The ghosts are satisfied.
-The curse lifts as Halloween magic fills the air.
+The curse lifts as Kiroween magic fills the air.
 
 Happy Kiroween! You've earned your freedom
 through kindness and candy.

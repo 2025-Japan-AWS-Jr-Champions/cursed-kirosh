@@ -19,7 +19,7 @@ export default function Home() {
         {/* Main Title */}
         <div className="title-section">
           <h1 className="main-title">CURSED KIROSH</h1>
-          <p className="subtitle">A Halloween Terminal Mystery</p>
+          <p className="subtitle">A Kiroween Terminal Mystery</p>
         </div>
 
         {/* Introduction */}
