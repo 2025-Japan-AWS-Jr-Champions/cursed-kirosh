@@ -1,254 +1,254 @@
-# ヒントシステム仕様書
+# Hint System Specification
 
-## 概要
+## Overview
 
-Cursed Kiroshゲームには、プレイヤーの進行状況に応じて自動的にヒントを表示するコンテキスト対応型ヒントシステムが実装されています。このシステムは、プレイヤーが行き詰まらないようにサポートしながら、ゲーム体験を損なわないように設計されています。
+The Cursed Kirosh game implements a context-aware hint system that automatically displays hints based on player progress. This system is designed to support players when they get stuck while maintaining an enjoyable game experience.
 
-## システム設定
+## System Configuration
 
-### タイミング設定
+### Timing Settings
 
-- **非アクティブタイムアウト**: 30秒
-  - プレイヤーが30秒間何も操作しない場合、非アクティブと判定
-- **ヒントクールダウン**: 60秒
-  - 前回のヒント表示から60秒経過しないと次のヒントは表示されない
-- **チェック間隔**: 5秒
-  - システムは5秒ごとにヒント表示条件をチェック
+- **Inactivity Timeout**: 30 seconds
+  - Player is considered inactive after 30 seconds of no interaction
+- **Hint Cooldown**: 60 seconds
+  - Next hint won't display until 60 seconds have passed since the last hint
+- **Check Interval**: 5 seconds
+  - System checks hint display conditions every 5 seconds
 
-### 表示条件
+### Display Conditions
 
-ヒントが表示されるには、以下の**全ての条件**を満たす必要があります：
+For a hint to be displayed, **ALL** of the following conditions must be met:
 
-1. ✅ ヒントが有効化されている（`hintsEnabled = true`）
-2. ✅ ゲームが完了していない（`gameComplete = false`）
-3. ✅ プレイヤーが30秒間非アクティブ
-4. ✅ 前回のヒント表示から60秒以上経過
-5. ✅ 該当するヒントの条件を満たしている
-6. ✅ そのヒントがまだ表示されていない
+1. ✅ Hints are enabled (`hintsEnabled = true`)
+2. ✅ Game is not complete (`gameComplete = false`)
+3. ✅ Player has been inactive for 30 seconds
+4. ✅ At least 60 seconds have passed since the last hint
+5. ✅ The hint's specific condition is satisfied
+6. ✅ The hint has not been shown before
 
-## 実装されているヒント一覧
+## Implemented Hints
 
-### 1. Morse Basics（優先度: 100）
+### 1. Morse Basics (Priority: 100)
 **ID**: `morse-basics`
 
-**メッセージ**:
+**Message**:
 ```
 💡 Hint: Use the Morse Code Input buttons (DOT and DASH) to unlock new characters. Try spelling 'SOS' with what you have!
 ```
 
-**表示条件**:
-- モールス信号の入力履歴がない（`morseHistory.length === 0`）
-- アンロック済み文字数が2文字のみ（初期状態）
+**Display Conditions**:
+- No Morse code input history (`morseHistory.length === 0`)
+- Only 2 characters unlocked (initial state)
 
-**目的**: 新規プレイヤーにモールス信号の使い方を教える
+**Purpose**: Teach new players how to use Morse code input
 
 ---
 
-### 2. Help Command（優先度: 90）
+### 2. Help Command (Priority: 90)
 **ID**: `help-command`
 
-**メッセージ**:
+**Message**:
 ```
 💡 Hint: Type 'help' to see available commands and get started.
 ```
 
-**表示条件**:
-- コマンド履歴がない（`commandHistory.length === 0`）
-- helpコマンドを実行していない
+**Display Conditions**:
+- No command history (`commandHistory.length === 0`)
+- Help command has not been executed
 
-**目的**: helpコマンドの存在を知らせる
+**Purpose**: Inform players about the help command
 
 ---
 
-### 3. Unlock More（優先度: 80）
+### 3. Unlock More (Priority: 80)
 **ID**: `unlock-more`
 
-**メッセージ**:
+**Message**:
 ```
 💡 Hint: You've unlocked some characters! Keep using Morse code to unlock more. Each letter has a unique pattern.
 ```
 
-**表示条件**:
-- アンロック済み文字数が3〜9文字
-- モールス信号の入力履歴がある（`morseHistory.length > 0`）
+**Display Conditions**:
+- 3-9 characters unlocked
+- Has Morse code input history (`morseHistory.length > 0`)
 
-**目的**: プレイヤーの進捗を認め、継続を促す
+**Purpose**: Acknowledge player progress and encourage continuation
 
 ---
 
-### 4. Stuck with Few Characters（優先度: 85）
+### 4. Stuck with Few Characters (Priority: 85)
 **ID**: `stuck-few-chars`
 
-**メッセージ**:
+**Message**:
 ```
 💡 Hint: Feeling stuck? Focus on unlocking more characters through Morse code. Start with common letters like 'E' (.) or 'T' (-).
 ```
 
-**表示条件**:
-- アンロック済み文字数が8文字未満
-- コマンド履歴が5回以上
-- モールス信号の入力履歴が3回未満
+**Display Conditions**:
+- Less than 8 characters unlocked
+- 5 or more commands in history
+- Less than 3 Morse code inputs in history
 
-**目的**: コマンドを試しているが文字をアンロックしていないプレイヤーをサポート
+**Purpose**: Support players who are trying commands but not unlocking characters
 
 ---
 
-### 5. Special Commands（優先度: 75）
+### 5. Special Commands (Priority: 75)
 **ID**: `special-commands`
 
-**メッセージ**:
+**Message**:
 ```
 💡 Hint: Some commands are hidden secrets. Try combinations of 'S' and 'O' like 'SOS', 'OS', 'OSS', 'SSO', or 'SOSO'.
 ```
 
-**表示条件**:
-- helpコマンドを実行済み
-- SOSコマンドを実行していない
-- アンロック済み文字数が5文字以下
+**Display Conditions**:
+- Help command has been executed
+- SOS command has not been executed
+- 5 or fewer characters unlocked
 
-**目的**: 初期文字で実行できる隠しコマンドを示唆
+**Purpose**: Hint at hidden commands executable with initial characters
 
 ---
 
-### 6. Heartbeat Unlock（優先度: 70）
+### 6. Heartbeat Unlock (Priority: 70)
 **ID**: `heartbeat-unlock`
 
-**メッセージ**:
+**Message**:
 ```
 💡 Hint: There's a special command that can unlock all characters at once. It's related to the sound you hear when clicking DOT...
 ```
 
-**表示条件**:
-- モールス信号の入力履歴が5回以上
-- アンロック済み文字数が26文字未満
-- heartbeatコマンドを実行していない
+**Display Conditions**:
+- 5 or more Morse code inputs in history
+- Less than 26 characters unlocked
+- Heartbeat command has not been executed
 
-**目的**: 全文字アンロックのショートカットを示唆
+**Purpose**: Hint at the shortcut to unlock all characters
 
 ---
 
-### 7. Multiple Endings（優先度: 65）
+### 7. Multiple Endings (Priority: 65)
 **ID**: `multiple-endings`
 
-**メッセージ**:
+**Message**:
 ```
 💡 Hint: This game has multiple endings! Try different commands like 'exit', 'sudo', 'treat', or 'kiro' to discover them.
 ```
 
-**表示条件**:
-- アンロック済み文字数が10文字以上
-- 実行済みコマンド数が3回以上
-- ゲームが完了していない
+**Display Conditions**:
+- 10 or more characters unlocked
+- 3 or more commands executed
+- Game is not complete
 
-**目的**: 複数のエンディングの存在を知らせる
+**Purpose**: Inform players about multiple endings
 
 ---
 
-### 8. Echo Secret（優先度: 60）
+### 8. Echo Secret (Priority: 60)
 **ID**: `echo-secret`
 
-**メッセージ**:
+**Message**:
 ```
 💡 Hint: The 'echo' command can do more than just repeat text. Try echoing a classic programmer's greeting...
 ```
 
-**表示条件**:
-- echoコマンドを実行済み
-- "echo Hello, world!"を実行していない
-- アンロック済み文字数が15文字以上
+**Display Conditions**:
+- Echo command has been executed
+- "echo Hello, world!" has not been executed
+- 15 or more characters unlocked
 
-**目的**: Engineer Endingへの道を示唆
+**Purpose**: Hint at the path to Engineer Ending
 
 ---
 
-### 9. Save Kiro（優先度: 55）
+### 9. Save Kiro (Priority: 55)
 **ID**: `save-kiro`
 
-**メッセージ**:
+**Message**:
 ```
 💡 Hint: You can save things in this terminal. What if you tried to save... Kiro?
 ```
 
-**表示条件**:
-- kiroコマンドを実行済み、**または**
-- アンロック済み文字数が20文字以上かつ実行済みコマンド数が5回以上
+**Display Conditions**:
+- Kiro command has been executed, **OR**
+- 20 or more characters unlocked AND 5 or more commands executed
 
-**目的**: True Endingへの道を示唆
+**Purpose**: Hint at the path to True Ending
 
 ---
 
-### 10. Light Mode（優先度: 50）
+### 10. Light Mode (Priority: 50)
 **ID**: `light-mode`
 
-**メッセージ**:
+**Message**:
 ```
 💡 Hint: The darkness getting to you? Try the 'light' command to brighten things up.
 ```
 
-**表示条件**:
-- コマンド履歴が10回以上
-- ライトモードが無効（`lightMode = false`）
-- lightコマンドを実行していない
+**Display Conditions**:
+- 10 or more commands in history
+- Light mode is disabled (`lightMode = false`)
+- Light command has not been executed
 
-**目的**: ライトモード機能の存在を知らせる
+**Purpose**: Inform players about the light mode feature
 
 ---
 
-## ヒント選択ロジック
+## Hint Selection Logic
 
-1. **フィルタリング**: 表示条件を満たし、まだ表示されていないヒントを抽出
-2. **優先度ソート**: 優先度の高い順（数値が大きい順）にソート
-3. **選択**: 最も優先度の高いヒントを1つ選択
-4. **表示**: システムメッセージとしてターミナルに表示
-5. **記録**: 表示済みヒントとして記録（同じヒントは二度と表示されない）
+1. **Filtering**: Extract hints that meet display conditions and haven't been shown yet
+2. **Priority Sorting**: Sort by priority in descending order (higher numbers first)
+3. **Selection**: Select the single hint with the highest priority
+4. **Display**: Show as a system message in the terminal
+5. **Recording**: Mark as shown (same hint will never be displayed again)
 
-## アクティビティトラッキング
+## Activity Tracking
 
-以下のユーザー操作で`lastActivityTime`が更新されます：
+The `lastActivityTime` is updated by the following user actions:
 
-- ✅ コマンドの送信
-- ✅ モールス信号の入力（DOT/DASHボタンのクリック）
-- ✅ ターミナルへの入力
+- ✅ Sending a command
+- ✅ Morse code input (clicking DOT/DASH buttons)
+- ✅ Typing in the terminal
 
-## 技術実装
+## Technical Implementation
 
-### ファイル構成
+### File Structure
 
 ```
 amplify-nextjs-app/
 ├── lib/game/
-│   ├── hintSystem.ts          # ヒントロジックとヒント定義
-│   ├── types.ts               # ヒント関連の型定義
-│   └── gameState.ts           # ヒント状態の管理
+│   ├── hintSystem.ts          # Hint logic and hint definitions
+│   ├── types.ts               # Hint-related type definitions
+│   └── gameState.ts           # Hint state management
 ├── hooks/
-│   └── useHints.ts            # ヒント表示フック
+│   └── useHints.ts            # Hint display hook
 └── components/game/
-    ├── Terminal.tsx           # アクティビティトラッキング
-    └── MorseInput.tsx         # アクティビティトラッキング
+    ├── Terminal.tsx           # Activity tracking
+    └── MorseInput.tsx         # Activity tracking
 ```
 
-### 主要な関数
+### Key Functions
 
-- `getNextHint(state)`: 次に表示すべきヒントを取得
-- `canShowHint(state)`: ヒント表示可能かチェック
-- `isPlayerInactive(state)`: プレイヤーが非アクティブかチェック
-- `shouldShowHintForInactivity(state)`: 非アクティブによるヒント表示判定
+- `getNextHint(state)`: Get the next hint to display
+- `canShowHint(state)`: Check if a hint can be shown
+- `isPlayerInactive(state)`: Check if player is inactive
+- `shouldShowHintForInactivity(state)`: Determine if hint should be shown due to inactivity
 
-### ゲームアクション
+### Game Actions
 
-- `UPDATE_ACTIVITY`: アクティビティ時刻を更新
-- `SHOW_HINT`: ヒントを表示済みとしてマーク
+- `UPDATE_ACTIVITY`: Update activity timestamp
+- `SHOW_HINT`: Mark hint as shown
 
-## 設定のカスタマイズ
+## Configuration Customization
 
-ヒントシステムは`lib/game/hintSystem.ts`で設定を変更できます：
+The hint system can be configured in `lib/game/hintSystem.ts`:
 
 ```typescript
-// タイムアウト設定
-export const INACTIVITY_TIMEOUT = 30000;  // 30秒
-export const HINT_COOLDOWN = 60000;       // 60秒
+// Timeout settings
+export const INACTIVITY_TIMEOUT = 30000;  // 30 seconds
+export const HINT_COOLDOWN = 60000;       // 60 seconds
 
-// ヒントの追加
+// Adding hints
 export const HINTS: Hint[] = [
   {
     id: 'custom-hint',
@@ -260,33 +260,33 @@ export const HINTS: Hint[] = [
 ];
 ```
 
-## テスト
+## Testing
 
-ヒントシステムは包括的なユニットテストでカバーされています：
+The hint system is covered by comprehensive unit tests:
 
 ```bash
 npm test -- lib/game/hintSystem.test.ts
 ```
 
-テストカバレッジ:
-- ✅ 非アクティブ検出
-- ✅ ヒント表示可否判定
-- ✅ ヒント選択ロジック
-- ✅ 重複表示防止
-- ✅ 優先度ソート
+Test Coverage:
+- ✅ Inactivity detection
+- ✅ Hint display eligibility
+- ✅ Hint selection logic
+- ✅ Duplicate display prevention
+- ✅ Priority sorting
 
-## プレイヤー体験への配慮
+## Player Experience Considerations
 
-1. **押し付けがましくない**: 60秒のクールダウンで頻繁すぎる表示を防止
-2. **コンテキスト対応**: プレイヤーの進行状況に応じた適切なヒント
-3. **一度きり**: 同じヒントは二度と表示されない
-4. **無効化可能**: `hintsEnabled`フラグで完全に無効化可能
-5. **視覚的に区別**: システムメッセージとして紫色で表示
+1. **Non-intrusive**: 60-second cooldown prevents overly frequent displays
+2. **Context-aware**: Appropriate hints based on player progress
+3. **One-time only**: Same hint never displays twice
+4. **Disableable**: Can be completely disabled with `hintsEnabled` flag
+5. **Visually distinct**: Displayed in purple as system messages
 
-## 今後の拡張案
+## Future Enhancement Ideas
 
-- [ ] ヒントの難易度設定（初心者/上級者モード）
-- [ ] プレイヤーがヒントをリクエストできる機能
-- [ ] ヒント表示履歴の確認機能
-- [ ] 特定のヒントを再表示する機能
-- [ ] ヒントの多言語対応
+- [ ] Hint difficulty settings (beginner/advanced mode)
+- [ ] Player-requested hint feature
+- [ ] Hint display history viewer
+- [ ] Ability to re-display specific hints
+- [ ] Multi-language hint support
