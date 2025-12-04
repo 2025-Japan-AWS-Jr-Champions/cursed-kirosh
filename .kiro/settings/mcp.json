@@ -23,7 +23,8 @@
       "disabled": false,
       "autoApprove": [
         "init",
-        "nextjs_docs"
+        "nextjs_docs",
+        "browser_eval"
       ]
     },
     "playwright": {
