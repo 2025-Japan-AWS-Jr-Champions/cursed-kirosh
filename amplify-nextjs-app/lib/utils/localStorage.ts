@@ -2,7 +2,7 @@
  * Browser localStorage utilities for game persistence
  */
 
-import type { GameState, OutputLine, MorseEntry } from '../game/types';
+import type { GameState, OutputLine, MorseEntry } from "../game/types";
 
 export interface LocalGameData {
   bestTime: number | null;
@@ -33,7 +33,7 @@ interface SerializableGameState {
   ghostEventActive: boolean;
   ghostEventCount: number;
   lastGhostEventTime: number;
-  currentEnding: GameState['currentEnding'];
+  currentEnding: GameState["currentEnding"];
   gameComplete: boolean;
   lastActivityTime: number;
   lastHintTime: number;
@@ -43,8 +43,8 @@ interface SerializableGameState {
   lightMode: boolean;
 }
 
-const STORAGE_KEY = 'cursed-kirosh-game-data';
-const SAVED_STATE_KEY = 'cursed-kirosh-saved-state';
+const STORAGE_KEY = "cursed-kirosh-game-data";
+const SAVED_STATE_KEY = "cursed-kirosh-saved-state";
 
 /**
  * Gets the default local game data
@@ -66,23 +66,23 @@ function getDefaultLocalGameData(): LocalGameData {
  * Loads game data from localStorage
  */
 export function loadLocalGameData(): LocalGameData {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return getDefaultLocalGameData();
   }
-  
+
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) {
       return getDefaultLocalGameData();
     }
-    
+
     const parsed = JSON.parse(stored);
     return {
       ...getDefaultLocalGameData(),
       ...parsed,
     };
   } catch (error) {
-    console.error('Failed to load game data:', error);
+    console.error("Failed to load game data:", error);
     return getDefaultLocalGameData();
   }
 }
@@ -91,14 +91,14 @@ export function loadLocalGameData(): LocalGameData {
  * Saves game data to localStorage
  */
 export function saveLocalGameData(data: Partial<LocalGameData>): void {
-  if (typeof window === 'undefined') return;
-  
+  if (typeof window === "undefined") return;
+
   try {
     const current = loadLocalGameData();
     const updated = { ...current, ...data };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
   } catch (error) {
-    console.error('Failed to save game data:', error);
+    console.error("Failed to save game data:", error);
   }
 }
 
@@ -107,12 +107,12 @@ export function saveLocalGameData(data: Partial<LocalGameData>): void {
  */
 export function updateBestTime(completionTime: number): boolean {
   const data = loadLocalGameData();
-  
+
   if (data.bestTime === null || completionTime < data.bestTime) {
     saveLocalGameData({ bestTime: completionTime });
     return true;
   }
-  
+
   return false;
 }
 
@@ -121,7 +121,7 @@ export function updateBestTime(completionTime: number): boolean {
  */
 export function addDiscoveredEnding(ending: string): void {
   const data = loadLocalGameData();
-  
+
   if (!data.endingsDiscovered.includes(ending)) {
     saveLocalGameData({
       endingsDiscovered: [...data.endingsDiscovered, ending],
@@ -140,7 +140,9 @@ export function incrementGamesPlayed(): void {
 /**
  * Updates user preferences
  */
-export function updatePreferences(preferences: Partial<LocalGameData['preferences']>): void {
+export function updatePreferences(
+  preferences: Partial<LocalGameData["preferences"]>,
+): void {
   const data = loadLocalGameData();
   saveLocalGameData({
     preferences: { ...data.preferences, ...preferences },
@@ -151,12 +153,12 @@ export function updatePreferences(preferences: Partial<LocalGameData['preference
  * Clears all local game data
  */
 export function clearLocalGameData(): void {
-  if (typeof window === 'undefined') return;
-  
+  if (typeof window === "undefined") return;
+
   try {
     localStorage.removeItem(STORAGE_KEY);
   } catch (error) {
-    console.error('Failed to clear game data:', error);
+    console.error("Failed to clear game data:", error);
   }
 }
 
@@ -193,7 +195,9 @@ function serializeGameState(state: GameState): SerializableGameState {
 /**
  * Converts serializable format back to GameState
  */
-function deserializeGameState(serialized: SerializableGameState): Partial<GameState> {
+function deserializeGameState(
+  serialized: SerializableGameState,
+): Partial<GameState> {
   return {
     unlockedChars: new Set(serialized.unlockedChars),
     initialChars: new Set(serialized.initialChars),
@@ -224,18 +228,18 @@ function deserializeGameState(serialized: SerializableGameState): Partial<GameSt
  * Saves current game state to localStorage
  */
 export function saveGameState(state: GameState): void {
-  if (typeof window === 'undefined') return;
-  
+  if (typeof window === "undefined") return;
+
   // Don't save if game is complete
   if (state.gameComplete) {
     return;
   }
-  
+
   try {
     const serialized = serializeGameState(state);
     localStorage.setItem(SAVED_STATE_KEY, JSON.stringify(serialized));
   } catch (error) {
-    console.error('Failed to save game state:', error);
+    console.error("Failed to save game state:", error);
   }
 }
 
@@ -243,18 +247,18 @@ export function saveGameState(state: GameState): void {
  * Loads saved game state from localStorage
  */
 export function loadSavedGameState(): Partial<GameState> | null {
-  if (typeof window === 'undefined') return null;
-  
+  if (typeof window === "undefined") return null;
+
   try {
     const stored = localStorage.getItem(SAVED_STATE_KEY);
     if (!stored) {
       return null;
     }
-    
+
     const serialized = JSON.parse(stored) as SerializableGameState;
     return deserializeGameState(serialized);
   } catch (error) {
-    console.error('Failed to load saved game state:', error);
+    console.error("Failed to load saved game state:", error);
     return null;
   }
 }
@@ -263,11 +267,11 @@ export function loadSavedGameState(): Partial<GameState> | null {
  * Checks if there is a saved game state
  */
 export function hasSavedGameState(): boolean {
-  if (typeof window === 'undefined') return false;
-  
+  if (typeof window === "undefined") return false;
+
   try {
     return localStorage.getItem(SAVED_STATE_KEY) !== null;
-  } catch (error) {
+  } catch (_error) {
     return false;
   }
 }
@@ -276,11 +280,11 @@ export function hasSavedGameState(): boolean {
  * Clears saved game state from localStorage
  */
 export function clearSavedGameState(): void {
-  if (typeof window === 'undefined') return;
-  
+  if (typeof window === "undefined") return;
+
   try {
     localStorage.removeItem(SAVED_STATE_KEY);
   } catch (error) {
-    console.error('Failed to clear saved game state:', error);
+    console.error("Failed to clear saved game state:", error);
   }
 }
