@@ -18,6 +18,7 @@ class AudioControllerImpl implements AudioController {
   private heartbeatBuffer: AudioBuffer | null = null;
   private screamBuffer: AudioBuffer | null = null;
   private ambientSource: AudioBufferSourceNode | null = null;
+  private ambientGain: GainNode | null = null;
   private gainNode: GainNode | null = null;
   private volume = 0.5;
   public isLoaded = false;
@@ -81,8 +82,22 @@ class AudioControllerImpl implements AudioController {
 
       const source = this.audioContext.createBufferSource();
       source.buffer = this.heartbeatBuffer;
-      source.connect(this.gainNode);
+      
+      // Create a gain node for this specific sound for fade effects
+      const soundGain = this.audioContext.createGain();
+      soundGain.connect(this.gainNode);
+      
+      // Quick fade in for smoother playback
+      soundGain.gain.setValueAtTime(0, this.audioContext.currentTime);
+      soundGain.gain.linearRampToValueAtTime(1, this.audioContext.currentTime + 0.05);
+      
+      source.connect(soundGain);
       source.start(0);
+      
+      // Fade out at the end
+      const duration = this.heartbeatBuffer.duration;
+      soundGain.gain.setValueAtTime(1, this.audioContext.currentTime + duration - 0.1);
+      soundGain.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + duration);
     } catch (error) {
       console.error("Failed to play heartbeat:", error);
     }
@@ -101,8 +116,22 @@ class AudioControllerImpl implements AudioController {
 
       const source = this.audioContext.createBufferSource();
       source.buffer = this.screamBuffer;
-      source.connect(this.gainNode);
+      
+      // Create a gain node for this specific sound for fade effects
+      const soundGain = this.audioContext.createGain();
+      soundGain.connect(this.gainNode);
+      
+      // Quick fade in for smoother playback
+      soundGain.gain.setValueAtTime(0, this.audioContext.currentTime);
+      soundGain.gain.linearRampToValueAtTime(1, this.audioContext.currentTime + 0.05);
+      
+      source.connect(soundGain);
       source.start(0);
+      
+      // Fade out at the end
+      const duration = this.screamBuffer.duration;
+      soundGain.gain.setValueAtTime(1, this.audioContext.currentTime + duration - 0.1);
+      soundGain.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + duration);
     } catch (error) {
       console.error("Failed to play scream:", error);
     }
@@ -117,11 +146,28 @@ class AudioControllerImpl implements AudioController {
     this.stopAmbientHeartbeat();
 
     try {
+      // Resume audio context if suspended (browser autoplay policy)
+      if (this.audioContext.state === "suspended") {
+        this.audioContext.resume();
+      }
+
+      // Create a separate gain node for ambient with lower volume
+      this.ambientGain = this.audioContext.createGain();
+      this.ambientGain.gain.value = 0; // Start at 0 for fade in
+      this.ambientGain.connect(this.gainNode);
+      
       this.ambientSource = this.audioContext.createBufferSource();
       this.ambientSource.buffer = this.heartbeatBuffer;
       this.ambientSource.loop = true;
-      this.ambientSource.connect(this.gainNode);
+      this.ambientSource.connect(this.ambientGain);
+      
+      // Fade in the ambient sound over 2 seconds
+      this.ambientGain.gain.setValueAtTime(0, this.audioContext.currentTime);
+      this.ambientGain.gain.linearRampToValueAtTime(0.4, this.audioContext.currentTime + 2);
+      
       this.ambientSource.start(0);
+      
+      console.log("Ambient heartbeat started");
     } catch (error) {
       console.error("Failed to play ambient heartbeat:", error);
     }
@@ -137,6 +183,17 @@ class AudioControllerImpl implements AudioController {
       }
       this.ambientSource = null;
     }
+    
+    if (this.ambientGain) {
+      try {
+        this.ambientGain.disconnect();
+      } catch (_error) {
+        // Gain might already be disconnected
+      }
+      this.ambientGain = null;
+    }
+    
+    console.log("Ambient heartbeat stopped");
   }
 
   setVolume(volume: number): void {

@@ -8,7 +8,7 @@ import { useAudio as useAudioContext } from '@/components/audio/AudioManager';
  * Provides convenient methods for playing game sounds
  */
 export function useAudio() {
-  const { audioController, isLoaded, isEnabled } = useAudioContext();
+  const { audioController, isLoaded, isEnabled, volume, setVolume: setVolumeContext, setIsEnabled } = useAudioContext();
 
   const playHeartbeat = useCallback(async () => {
     if (audioController && isLoaded && isEnabled) {
@@ -35,13 +35,15 @@ export function useAudio() {
   }, [audioController, isLoaded]);
 
   const setVolume = useCallback(
-    (volume: number) => {
-      if (audioController) {
-        audioController.setVolume(volume);
-      }
+    (vol: number) => {
+      setVolumeContext(vol);
     },
-    [audioController]
+    [setVolumeContext]
   );
+
+  const toggleAudio = useCallback(() => {
+    setIsEnabled(!isEnabled);
+  }, [isEnabled, setIsEnabled]);
 
   return {
     playHeartbeat,
@@ -49,7 +51,9 @@ export function useAudio() {
     playAmbientHeartbeat,
     stopAmbientHeartbeat,
     setVolume,
+    toggleAudio,
     isLoaded,
     isEnabled,
+    volume,
   };
 }

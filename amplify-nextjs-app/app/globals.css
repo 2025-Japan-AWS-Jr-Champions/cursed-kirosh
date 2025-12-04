@@ -1,31 +1,106 @@
 @import "tailwindcss";
 
+/* ===== HALLOWEEN THEME COLOR VARIABLES ===== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Base colors */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a0a1a;
+  --bg-tertiary: #0f0a15;
+  
+  /* Text colors */
+  --text-primary: #ff6600;
+  --text-secondary: #ff8833;
+  --text-error: #ff0000;
+  --text-system: #8b00ff;
+  --text-muted: #666666;
+  
+  /* Accent colors */
+  --accent-purple: #9933ff;
+  --accent-orange: #ff6600;
+  --accent-blood: #cc0000;
+  
+  /* Character states */
+  --locked-char: #333333;
+  --unlocked-char: #ff6600;
+  
+  /* Ghost colors */
+  --ghost-white: #f0f0f0;
+  
+  /* Glow effects */
+  --glow-purple: rgba(153, 51, 255, 0.5);
+  --glow-orange: rgba(255, 102, 0, 0.5);
+  --glow-purple-strong: rgba(153, 51, 255, 0.8);
+  --glow-orange-strong: rgba(255, 102, 0, 0.8);
+  
+  /* Legacy support */
+  --background: #0a0a0a;
+  --foreground: #ff6600;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: 'Courier New', monospace;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Atmospheric background effect */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, var(--glow-purple) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--glow-orange) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(139, 0, 255, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: atmospheric-pulse 10s ease-in-out infinite;
+}
+
+@keyframes atmospheric-pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.5;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Ensure content is above background */
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
-/* Curse effect animation for terminal text */
+/* ===== CURSOR ANIMATIONS ===== */
+@keyframes cursor-blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.cursor-blink {
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* ===== CURSE EFFECT ANIMATIONS ===== */
 @keyframes curse-jitter {
   0%, 100% {
     transform: translate(0, 0) rotate(0deg);
@@ -64,7 +139,76 @@ body {
   display: inline-block;
 }
 
-/* Ending screen animations */
+/* ===== CHARACTER UNLOCK CRACK EFFECT ===== */
+@keyframes crack {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  20% {
+    transform: scale(1.1) rotate(2deg);
+    filter: brightness(1.5);
+  }
+  40% {
+    transform: scale(0.95) rotate(-2deg);
+    filter: brightness(1.3);
+  }
+  60% {
+    transform: scale(1.05) rotate(1deg);
+    filter: brightness(1.2);
+  }
+  80% {
+    transform: scale(0.98) rotate(-1deg);
+    filter: brightness(1.1);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1);
+  }
+}
+
+@keyframes crack-flash {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ===== GHOST APPEARANCE ANIMATIONS ===== */
+@keyframes ghost-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ghost-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes ghost-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+/* ===== ENDING SCREEN ANIMATIONS ===== */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -85,6 +229,17 @@ body {
   }
 }
 
+@keyframes slide-up {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 @keyframes bounce-slow {
   0%, 100% {
     transform: translateY(0);
@@ -94,6 +249,16 @@ body {
   }
 }
 
+@keyframes ending-glow {
+  0%, 100% {
+    text-shadow: 0 0 10px currentColor;
+  }
+  50% {
+    text-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+/* ===== ANIMATION UTILITY CLASSES ===== */
 .animate-fade-in {
   animation: fade-in 0.5s ease-out;
 }
@@ -102,6 +267,232 @@ body {
   animation: scale-in 0.5s ease-out;
 }
 
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out;
+}
+
 .animate-bounce-slow {
   animation: bounce-slow 2s ease-in-out infinite;
+}
+
+.animate-ghost-fade-in {
+  animation: ghost-fade-in 0.5s ease-in;
+}
+
+.animate-ghost-float {
+  animation: ghost-float 3s ease-in-out infinite;
+}
+
+.animate-ghost-pulse {
+  animation: ghost-pulse 2s ease-in-out infinite;
+}
+
+.animate-ending-glow {
+  animation: ending-glow 2s ease-in-out infinite;
+}
+
+.animate-crack {
+  animation: crack 0.6s ease-out;
+}
+
+
+/* ===== GLOW EFFECTS ===== */
+.glow-orange {
+  text-shadow: 0 0 10px var(--glow-orange);
+}
+
+.glow-orange-strong {
+  text-shadow: 0 0 10px var(--glow-orange-strong), 0 0 20px var(--glow-orange);
+}
+
+.glow-purple {
+  text-shadow: 0 0 10px var(--glow-purple);
+}
+
+.glow-purple-strong {
+  text-shadow: 0 0 10px var(--glow-purple-strong), 0 0 20px var(--glow-purple);
+}
+
+.glow-box-orange {
+  box-shadow: 0 0 20px var(--glow-orange);
+}
+
+.glow-box-purple {
+  box-shadow: 0 0 20px var(--glow-purple);
+}
+
+.glow-box-orange-strong {
+  box-shadow: 0 0 20px var(--glow-orange-strong), 0 0 40px var(--glow-orange);
+}
+
+.glow-box-purple-strong {
+  box-shadow: 0 0 20px var(--glow-purple-strong), 0 0 40px var(--glow-purple);
+}
+
+/* ===== HALLOWEEN THEMED BORDERS ===== */
+.border-halloween {
+  border: 2px solid var(--accent-purple);
+  box-shadow: 0 0 20px var(--glow-purple);
+}
+
+.border-halloween-orange {
+  border: 2px solid var(--accent-orange);
+  box-shadow: 0 0 20px var(--glow-orange);
+}
+
+/* ===== HALLOWEEN THEMED BACKGROUNDS ===== */
+.bg-halloween-dark {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.bg-halloween-card {
+  background: linear-gradient(135deg, rgba(26, 10, 26, 0.8) 0%, rgba(10, 10, 10, 0.8) 100%);
+  backdrop-filter: blur(10px);
+}
+
+/* ===== HALLOWEEN THEMED TEXT ===== */
+.text-halloween-primary {
+  color: var(--text-primary);
+}
+
+.text-halloween-secondary {
+  color: var(--text-secondary);
+}
+
+.text-halloween-system {
+  color: var(--text-system);
+}
+
+.text-halloween-error {
+  color: var(--text-error);
+}
+
+/* ===== HALLOWEEN THEMED BUTTONS ===== */
+.btn-halloween-orange {
+  background: linear-gradient(135deg, var(--accent-orange) 0%, #ff8833 100%);
+  color: var(--bg-primary);
+  border: 2px solid var(--accent-orange);
+  box-shadow: 0 0 10px var(--glow-orange);
+  transition: all 0.3s ease;
+}
+
+.btn-halloween-orange:hover {
+  background: linear-gradient(135deg, #ff8833 0%, #ffaa55 100%);
+  box-shadow: 0 0 20px var(--glow-orange-strong);
+  transform: translateY(-2px);
+}
+
+.btn-halloween-purple {
+  background: linear-gradient(135deg, var(--accent-purple) 0%, #aa44ff 100%);
+  color: white;
+  border: 2px solid var(--accent-purple);
+  box-shadow: 0 0 10px var(--glow-purple);
+  transition: all 0.3s ease;
+}
+
+.btn-halloween-purple:hover {
+  background: linear-gradient(135deg, #aa44ff 0%, #cc66ff 100%);
+  box-shadow: 0 0 20px var(--glow-purple-strong);
+  transform: translateY(-2px);
+}
+
+/* ===== SCROLLBAR THEMING ===== */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-orange) 100%);
+  border-radius: 5px;
+  border: 2px solid var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-purple) 100%);
+  box-shadow: 0 0 10px var(--glow-orange);
+}
+
+/* ===== SELECTION THEMING ===== */
+::selection {
+  background: var(--accent-orange);
+  color: var(--bg-primary);
+}
+
+::-moz-selection {
+  background: var(--accent-orange);
+  color: var(--bg-primary);
+}
+
+/* ===== FOCUS STATES ===== */
+*:focus-visible {
+  outline: 2px solid var(--accent-orange);
+  outline-offset: 2px;
+  box-shadow: 0 0 10px var(--glow-orange);
+}
+
+/* ===== HALLOWEEN THEMED CARDS ===== */
+.card-halloween {
+  background: var(--bg-halloween-card);
+  border: 2px solid var(--accent-purple);
+  border-radius: 8px;
+  box-shadow: 0 0 20px var(--glow-purple);
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.card-halloween:hover {
+  box-shadow: 0 0 30px var(--glow-purple-strong);
+  transform: translateY(-4px);
+}
+
+/* ===== SPOOKY TEXT EFFECTS ===== */
+.text-spooky {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: spooky-flicker 3s ease-in-out infinite;
+}
+
+@keyframes spooky-flicker {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 10px var(--glow-orange);
+  }
+  50% {
+    opacity: 0.8;
+    text-shadow: 0 0 20px var(--glow-orange-strong);
+  }
+}
+
+/* ===== PULSING EFFECTS ===== */
+.pulse-orange {
+  animation: pulse-orange 2s ease-in-out infinite;
+}
+
+@keyframes pulse-orange {
+  0%, 100% {
+    box-shadow: 0 0 10px var(--glow-orange);
+  }
+  50% {
+    box-shadow: 0 0 30px var(--glow-orange-strong);
+  }
+}
+
+.pulse-purple {
+  animation: pulse-purple 2s ease-in-out infinite;
+}
+
+@keyframes pulse-purple {
+  0%, 100% {
+    box-shadow: 0 0 10px var(--glow-purple);
+  }
+  50% {
+    box-shadow: 0 0 30px var(--glow-purple-strong);
+  }
 }

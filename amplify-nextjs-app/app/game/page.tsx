@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { GameProvider, useGameContext } from "@/lib/game/GameContext";
 import {
   Terminal,
@@ -10,7 +11,9 @@ import {
   GhostEvent,
 } from "@/components/game";
 import AudioManager from "@/components/audio/AudioManager";
+import { AudioControls } from "@/components/audio/AudioControls";
 import { useGhostEvent } from "@/hooks/useGhostEvent";
+import { useAudio } from "@/hooks/useAudio";
 
 /**
  * Game Page
@@ -29,6 +32,8 @@ export default function GamePage() {
 function GameContent() {
   const router = useRouter();
   const { state, dispatch } = useGameContext();
+  const { playAmbientHeartbeat, stopAmbientHeartbeat, isLoaded, isEnabled } =
+    useAudio();
 
   // Initialize ghost event system
   useGhostEvent({
@@ -37,6 +42,26 @@ function GameContent() {
     warningTime: 3000, // 3 seconds
     enabled: true,
   });
+
+  // Start ambient heartbeat when audio is loaded and enabled
+  useEffect(() => {
+    if (isLoaded && isEnabled && !state.gameComplete) {
+      playAmbientHeartbeat();
+    } else {
+      stopAmbientHeartbeat();
+    }
+
+    // Cleanup on unmount
+    return () => {
+      stopAmbientHeartbeat();
+    };
+  }, [
+    isLoaded,
+    isEnabled,
+    state.gameComplete,
+    playAmbientHeartbeat,
+    stopAmbientHeartbeat,
+  ]);
 
   const handleGhostTreat = () => {
     // Resolve ghost event successfully
@@ -215,6 +240,9 @@ function GameContent() {
           </div>
         </div>
       </div>
+
+      {/* Audio Controls */}
+      <AudioControls />
 
       {/* Attribution Footer */}
       <footer className="game-footer">
