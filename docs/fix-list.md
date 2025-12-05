@@ -10,7 +10,8 @@ after fixed, you showed check the checkbox.
     * [x] not fixed. instead of make it bold, how about make it lighter in terminal?
       * [x] moreover, make it bold too.
         * [x] when the command typed like sos, the output is purple text but it seems not light and not bold. fix them at all. "trick or treat"'s ghost messages are same too.
-          * [ ] the bold is a bit too bold. can you make it a bit thin, but bolder than plain text?
+          * [x] the bold is a bit too bold. can you make it a bit thin, but bolder than plain text?
+            * [ ] ok
 * [x] gray thin text is hard to see. so, if text is gray, make it all bold.
   * [x] ok
 * [x] at cursed terminal, if user want to focus to command line input area for inputting some text, user must move cursor to just on the area. it is troublesome. if user clicked the inside of cursed terminal, make it focused on the input area.
@@ -20,7 +21,8 @@ after fixed, you showed check the checkbox.
     * [x] moreover, make all keys height half, for smaller space. also, symbols place to be right. so, left is qwerty with number, right is symbols. also, symbol keys must be grouped by similar symbols. there is no need to show labels for groups, just place keys nearly if same group, if different group, place a bit far.
       * [x] the grouped symbols must be multiple lines. now it is 1 long line, so it is a bit difficult to see it. make it 4 lines to be easier to see.
         * [x] good. make qwerty and symbols closer. qwerty and symbols keys are pair, and it must be align center.
-          * [ ] not fixed. both are apart. make it closer. think.
+          * [x] not fixed. both are apart. make it closer. think.
+            * [ ] good. now, the symbols keys are repeating 2 blocks. the left block want to be justify end, the right block want to be justify start(as same as now)
 * [x] at virtual keyboard, now it is on right upper corner, but it is too small, and there is some space on bottom left corner, where is below of cursed terminal. fix the place to bottom left, and fix sizes(keyboard, keys, edges or anythings) to be the best. (of course, morse code input area must be right upper)
   * [x] now its bottom right. make it full wide. so, like below
     * [ ] ok
@@ -48,8 +50,10 @@ after fixed, you showed check the checkbox.
     * [ ] ok
 * [x] when cleared, if no player names inputted and user clicked play again or view leaderboard, notice to user, that some text like "if user don't submit score, the score is not recorded, and lost forever"
   * [x] the browser default alert is not beautiful. make some modal in same design.
-* [ ] show the elapsed time with horror design only when it is develop environment as well as test trigger ghost event button. the time must update by 10 seconds. so, every 10 seconds elapsed, the timer updates.
-* [ ] the left and right of "Waiting for input..." is a bit narrow. make the letter smaller or make the box wider.
+* [x] show the elapsed time with horror design only when it is develop environment as well as test trigger ghost event button. the time must update by 10 seconds. so, every 10 seconds elapsed, the timer updates.
+  * [ ] ok
+* [x] the left and right of "Waiting for input..." is a bit narrow. make the letter smaller or make the box wider.
+  * [ ] ok
 
 ## Bug fix
 
@@ -60,8 +64,11 @@ after fixed, you showed check the checkbox.
         * [ ] loading is not working maybe. i cant see any loading object, and can see the raw html a bit time still.
 * [x] the symbols are not locked. it seems like locked, locked in virtual keyboard, but we can type any symbols to cursed terminal. for example, at any time, we can type double quote, or any symbols.
   * [x] ok
-* [ ] the first time terminal output, such as command output, hint, or ghost event, it is overriding the initial message. make initial default massage will remain.
-* [ ] if ghost event failed with typo, must show the message in terminal, which different with "Too late! The ghost has re-locked your characters"
+* [x] the first time terminal output, such as command output, hint, or ghost event, it is overriding the initial message. make initial default massage will remain.
+  * [ ] ok
+* [x] if ghost event failed with typo, must show the message in terminal, which different with "Too late! The ghost has re-locked your characters"
+  * [ ] ok
+* [ ] the heratbeat command should unlock ALL keys. include number or symbol. now it unlocks alphabets only, it is wrong.
 
 ## Audio fix
 
