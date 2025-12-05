@@ -1,13 +1,6 @@
-import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
+import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 
 const schema = a.schema({
-  Todo: a
-    .model({
-      content: a.string(),
-      isDone: a.boolean(),
-    })
-    .authorization((allow) => [allow.owner()]),
-  
   LeaderboardEntry: a
     .model({
       playerName: a.string().required(),
@@ -17,9 +10,7 @@ const schema = a.schema({
       unlockedCharCount: a.integer(),
       secretsFound: a.integer(),
     })
-    .authorization((allow) => [
-      allow.publicApiKey().to(['read', 'create'])
-    ]),
+    .authorization((allow) => [allow.publicApiKey().to(["read", "create"])]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -27,7 +18,7 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'userPool',
+    defaultAuthorizationMode: "apiKey",
     apiKeyAuthorizationMode: {
       expiresInDays: 30,
     },
