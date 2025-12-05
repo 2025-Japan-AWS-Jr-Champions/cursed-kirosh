@@ -41,7 +41,7 @@ after fixed, you showed check the checkbox.
 * [x] at terminal, i want auto scroll. by default, or focusing to typing area, auto scroll to bottom. when user scrolled to up, show down allow at the right bottom corner of terminal. if user clicked the allow button, auto scroll starts again.
   * [x] there is no allow button. check it and make it works.
     * [x] there is button and it works. but auto scroll down is not working. for example, when command inputted, output shows but there is no scroll. fix it.
-      * [ ] remain task. when type the key that is locked, there is error message, but auto scroll to error message is not working.
+      * [x] remain task. when type the key that is locked, there is error message, but auto scroll to error message is not working.
 * [x] at clear the game, now it is immediately show the modal of ending, so ending message in terminal has no time to be seen. make it some seconds when cleared the game to see the text in terminal.
   * [x] too short. make it 10 seconds. and notice to user, how many seconds remain to see this text, and stepping to the next scene(clear modal)
     * [x] the notice is too noisy. and it overlaps the terminal text. make it the best place.
@@ -72,8 +72,10 @@ after fixed, you showed check the checkbox.
   * [ ] ok
 * [x] the heratbeat command should unlock ALL keys. include number or symbol. now it unlocks alphabets only, it is wrong.
   * [ ] ok
-* [ ] Even if run "light" command, the terminal does not change to light theme terminal.
-* [ ] Even if run "sso" command, it is not game over. game is continued. it must be game over, and guide to retry.
+* [ ] Even if run "light" command, the terminal does not change to light theme terminal. (Note: This requires significant UI changes - light mode toggle is not currently implemented)
+  * [ ] therefore, do it with minimum changes. just light the terminal component only, and how about just change all color to complementary color. now most colors are darky, so it will be whity but it will be somehow horror.
+* [x] Even if run "sso" command, it is not game over. game is continued. it must be game over, and guide to retry.
+* [ ] the cursed text is not used. how about the confirmed text, default text, command output, inputted(already run command), "cursed@kirosh:~$" with already run command, hint, ghost event's terminal text, these any confirmed(is not going to be changed) text will be cursed 5 seconds after confirmed, line by line.
 
 ## Audio fix
 
