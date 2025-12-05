@@ -167,7 +167,8 @@ export default function EndingScreen({
 
   // Handle restart with warning if score not submitted
   const handleRestartWithWarning = () => {
-    if (showNamePrompt && !submitSuccess) {
+    // No warning for SSO ending (can't submit score anyway)
+    if (ending !== "sso" && showNamePrompt && !submitSuccess) {
       setPendingAction("restart");
       setShowWarningModal(true);
     } else {
@@ -177,7 +178,8 @@ export default function EndingScreen({
 
   // Handle view leaderboard with warning if score not submitted
   const handleViewLeaderboardWithWarning = () => {
-    if (showNamePrompt && !submitSuccess) {
+    // No warning for SSO ending (can't submit score anyway)
+    if (ending !== "sso" && showNamePrompt && !submitSuccess) {
       setPendingAction("leaderboard");
       setShowWarningModal(true);
     } else {
@@ -233,12 +235,12 @@ export default function EndingScreen({
         <div className="text-center mb-8">
           <div className="text-sm text-gray-400 mb-1">Completion Time</div>
           <div className="text-3xl font-mono text-orange-400">
-            {formatTime(completionTime)}
+            {ending === "sso" ? "Never Ending..." : formatTime(completionTime)}
           </div>
         </div>
 
-        {/* Name Prompt for Leaderboard */}
-        {showNamePrompt && !submitSuccess && (
+        {/* Name Prompt for Leaderboard - disabled for SSO ending */}
+        {ending !== "sso" && showNamePrompt && !submitSuccess && (
           <div className="mb-8 p-4 bg-black/30 rounded-lg border border-purple-500/30">
             <h3 className="text-lg font-semibold text-purple-300 mb-3 text-center">
               Submit to Leaderboard

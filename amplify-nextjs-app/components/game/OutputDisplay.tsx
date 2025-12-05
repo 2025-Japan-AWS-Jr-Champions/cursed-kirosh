@@ -3,22 +3,27 @@
 import React, { useEffect, useRef } from "react";
 import type { OutputLine } from "@/lib/game/types";
 import { CursedText } from "./CursedText";
+import { useGameContext } from "@/lib/game/GameContext";
 
 interface OutputDisplayProps {
   lines: OutputLine[];
   maxLines?: number;
+  currentEnding?: string | null;
 }
 
 /**
  * OutputDisplay Component
  * Renders terminal output history with color coding and auto-scroll
  */
-export function OutputDisplay({ lines, maxLines = 1000 }: OutputDisplayProps) {
+export function OutputDisplay({
+  lines,
+  maxLines = 1000,
+  currentEnding = null,
+}: OutputDisplayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldAutoScroll = useRef(true);
 
   // Import game context for light mode
-  const { useGameContext } = require("@/lib/game/GameContext");
   const { state } = useGameContext();
 
   // Auto-scroll to bottom when new lines are added
@@ -57,35 +62,55 @@ export function OutputDisplay({ lines, maxLines = 1000 }: OutputDisplayProps) {
   };
 
   const formatLine = (line: OutputLine): React.ReactNode => {
+    // Disable cursedText for ending messages (except SSO ending)
+    const isEndingMessage = currentEnding !== null;
+    const isSSOEnding = currentEnding === "sso";
+    const shouldUseCursedText = !isEndingMessage || isSSOEnding;
+
     if (line.type === "command") {
       return (
         <>
           <span className="command-prompt">
-            <CursedText text="cursed@kirosh:~$" delay={5000} />
+            <CursedText
+              text="cursed@kirosh:~$"
+              delay={5000}
+              enabled={shouldUseCursedText}
+            />
           </span>{" "}
           <span className="command-text">
-            <CursedText text={line.text} delay={5000} />
+            <CursedText
+              text={line.text}
+              delay={5000}
+              enabled={shouldUseCursedText}
+            />
           </span>
         </>
       );
     }
-    
+
     // Split multi-line text and render each line separately with CursedText
-    const lines = line.text.split('\n');
+    const lines = line.text.split("\n");
     if (lines.length > 1) {
       return (
         <>
           {lines.map((textLine, index) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: Text lines are static and won't be reordered
             <React.Fragment key={index}>
-              <CursedText text={textLine} delay={5000} />
+              <CursedText
+                text={textLine}
+                delay={5000}
+                enabled={shouldUseCursedText}
+              />
               {index < lines.length - 1 && <br />}
             </React.Fragment>
           ))}
         </>
       );
     }
-    
-    return <CursedText text={line.text} delay={5000} />;
+
+    return (
+      <CursedText text={line.text} delay={5000} enabled={shouldUseCursedText} />
+    );
   };
 
   return (

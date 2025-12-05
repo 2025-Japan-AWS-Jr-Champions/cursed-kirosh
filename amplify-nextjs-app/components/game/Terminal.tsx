@@ -127,7 +127,7 @@ export function Terminal({ onCommand, disabled = false }: TerminalProps) {
         </div>
 
         {/* Output display */}
-        <OutputDisplay lines={state.outputLines} />
+        <OutputDisplay lines={state.outputLines} currentEnding={state.currentEnding} />
 
         {/* Command prompt */}
         <CommandPrompt
