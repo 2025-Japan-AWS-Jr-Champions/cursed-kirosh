@@ -125,11 +125,12 @@ describe("executeCommand - special commands", () => {
     expect(result.output).toContain("Linux");
   });
 
-  it("should execute SSO command", () => {
+  it("should execute SSO command (Sword Sorcerer Online)", () => {
     const parsed = parseCommand("sso");
     const result = executeCommand(parsed, gameState);
     expect(result.success).toBe(true);
     expect(result.output).toContain("GAME OVER");
+    expect(result.output).toContain("Sword Sorcerer Online");
   });
 
   it("should execute SOSO command", () => {
@@ -153,7 +154,7 @@ describe("executeCommand - heartbeat", () => {
 
     // Check that first action is DISCOVER_SECRET
     expect(result.actions?.[0]?.type).toBe("DISCOVER_SECRET");
-    
+
     // Check that remaining actions are UNLOCK_CHARACTER
     result.actions?.slice(1).forEach((action) => {
       expect(action.type).toBe("UNLOCK_CHARACTER");

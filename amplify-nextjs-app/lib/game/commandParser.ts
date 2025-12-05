@@ -197,12 +197,12 @@ function executeEcho(args: string[]): CommandResult {
   }
 
   let text = args.join(" ");
-  
+
   // Trim surrounding quotes if text starts and ends with "
   if (text.startsWith('"') && text.endsWith('"') && text.length > 1) {
     text = text.slice(1, -1);
   }
-  
+
   return {
     success: true,
     output: text,
@@ -284,6 +284,7 @@ The spirits of open source guide you...
 
 /**
  * Execute SSO command - game over (bad ending)
+ * SSO = Sword Sorcerer Online (VR game death)
  */
 function executeSSO(): CommandExecutionResult {
   const output = `
@@ -291,12 +292,14 @@ function executeSSO(): CommandExecutionResult {
 ║           GAME OVER                    ║
 ╚════════════════════════════════════════╝
 
-Single Sign-On... to the void.
+Sword Sorcerer Online...
 
-You have been logged out of existence.
+You are trapped in the VR game.
+Game over means death in the real world.
+
 The curse consumes all.
-
 You have failed to escape.
+
 Type 'exit' or use another command to try again.
   `.trim();
 
@@ -306,7 +309,7 @@ Type 'exit' or use another command to try again.
     type: "error",
     actions: [
       { type: "DISCOVER_SECRET", secret: "sso" },
-      { type: "END_GAME", ending: "sso" }
+      { type: "END_GAME", ending: "sso" },
     ],
   };
 }
@@ -401,7 +404,7 @@ function executeHelp(): CommandResult {
   sos             - Send distress signal
   os              - Boot sequence
   oss             - Open source projects (Morse encoded)
-  sso             - Single sign-on (warning!)
+  sso             - Sword Sorcerer Online (warning: VR death game!)
   soso            - Encouragement
   heartbeat       - Unlock ALL characters (letters, numbers, symbols)
   light           - Toggle light/dark mode
@@ -622,12 +625,12 @@ The true hero's ending.
  */
 function checkEngineerEnding(args: string[]): boolean {
   let text = args.join(" ");
-  
+
   // Remove surrounding quotes if present
   if (text.startsWith('"') && text.endsWith('"') && text.length > 1) {
     text = text.slice(1, -1);
   }
-  
+
   // Check against all accepted variations (case-insensitive for "world")
   const acceptedVariations = [
     "Hello, world!",
@@ -635,7 +638,7 @@ function checkEngineerEnding(args: string[]): boolean {
     "Hello world!",
     "Hello World!",
   ];
-  
+
   return acceptedVariations.includes(text);
 }
 

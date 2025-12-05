@@ -178,6 +178,7 @@ npm run amplify:deploy   # Deploy to production (update YOUR_APP_ID first)
 - `cat <file>` - Read file contents
 - `echo <text>` - Print text
 - `sos` - Emergency signal
+- `sso` - Sword Sorcerer Online (VR death game - bad ending!)
 - `exit` - Normal ending
 - `sudo exit` - Sudo ending
 - `treat` - Kiroween ending

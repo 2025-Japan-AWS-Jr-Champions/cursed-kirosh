@@ -95,7 +95,7 @@ function getEndingContent(ending: EndingType): {
       return {
         title: "Game Over - SSO Ending",
         message:
-          "You attempted Single Sign-On to the void. You have been logged out of existence. The curse consumed you completely.",
+          "You entered Sword Sorcerer Online, a VR death game. Game over in the virtual world means death in reality. The curse consumed you completely.",
         artwork: "💀",
         color: "text-red-500",
       };
