@@ -355,6 +355,8 @@ npx ampx generate outputs --profile kirosh
 
 ## 📝 License
 
+MIT License - see [LICENSE](LICENSE) file for details.
+
 This project was created for the Kiro Hackathon. All third-party assets are used with proper attribution and licensing.
 
 ---
