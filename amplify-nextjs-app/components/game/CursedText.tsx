@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface CursedTextProps {
   text: string;
@@ -12,7 +12,11 @@ interface CursedTextProps {
  * CursedText Component
  * Applies jitter animation to text after a delay to create the "curse" effect
  */
-export function CursedText({ text, delay = 2000, enabled = true }: CursedTextProps) {
+export function CursedText({
+  text,
+  delay = 2000,
+  enabled = true,
+}: CursedTextProps) {
   const [isCursed, setIsCursed] = useState(false);
 
   useEffect(() => {
@@ -27,7 +31,7 @@ export function CursedText({ text, delay = 2000, enabled = true }: CursedTextPro
     }, delay);
 
     return () => clearTimeout(timer);
-  }, [text, delay, enabled]);
+  }, [delay, enabled]);
 
   if (!enabled || !isCursed) {
     return <span>{text}</span>;
@@ -36,9 +40,10 @@ export function CursedText({ text, delay = 2000, enabled = true }: CursedTextPro
   // Split text into individual characters for animation
   return (
     <span className="cursed-text-container">
-      {text.split('').map((char, index) => (
+      {text.split("").map((char, index) => (
         <span
-          key={`${char}-${index}`}
+          // biome-ignore lint/suspicious/noArrayIndexKey: Text characters are static and won't be reordered
+          key={`${text}-${index}`}
           className="cursed-char"
           style={{
             animationDelay: `${index * 0.05}s`,
@@ -47,7 +52,7 @@ export function CursedText({ text, delay = 2000, enabled = true }: CursedTextPro
           {char}
         </span>
       ))}
-      
+
       <style jsx>{`
         .cursed-text-container {
           display: inline-block;

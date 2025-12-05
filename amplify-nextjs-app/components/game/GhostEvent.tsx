@@ -185,6 +185,9 @@ export function GhostEvent({
         .ghost-image-wrapper {
           position: relative;
           margin-bottom: 24px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
         .ghost-image {

@@ -1,8 +1,8 @@
 "use client";
 
-import type React from "react";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import type { OutputLine } from "@/lib/game/types";
+import { CursedText } from "./CursedText";
 
 interface OutputDisplayProps {
   lines: OutputLine[];
@@ -16,9 +16,9 @@ interface OutputDisplayProps {
 export function OutputDisplay({ lines, maxLines = 1000 }: OutputDisplayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldAutoScroll = useRef(true);
-  
+
   // Import game context for light mode
-  const { useGameContext } = require('@/lib/game/GameContext');
+  const { useGameContext } = require("@/lib/game/GameContext");
   const { state } = useGameContext();
 
   // Auto-scroll to bottom when new lines are added
@@ -60,12 +60,32 @@ export function OutputDisplay({ lines, maxLines = 1000 }: OutputDisplayProps) {
     if (line.type === "command") {
       return (
         <>
-          <span className="command-prompt">cursed@kirosh:~$</span>{" "}
-          <span className="command-text">{line.text}</span>
+          <span className="command-prompt">
+            <CursedText text="cursed@kirosh:~$" delay={5000} />
+          </span>{" "}
+          <span className="command-text">
+            <CursedText text={line.text} delay={5000} />
+          </span>
         </>
       );
     }
-    return line.text;
+    
+    // Split multi-line text and render each line separately with CursedText
+    const lines = line.text.split('\n');
+    if (lines.length > 1) {
+      return (
+        <>
+          {lines.map((textLine, index) => (
+            <React.Fragment key={index}>
+              <CursedText text={textLine} delay={5000} />
+              {index < lines.length - 1 && <br />}
+            </React.Fragment>
+          ))}
+        </>
+      );
+    }
+    
+    return <CursedText text={line.text} delay={5000} />;
   };
 
   return (
@@ -98,31 +118,31 @@ export function OutputDisplay({ lines, maxLines = 1000 }: OutputDisplayProps) {
         }
         
         .output-line-command {
-          color: ${state.lightMode ? '#0077cc' : '#ff8833'};
+          color: ${state.lightMode ? "#0077cc" : "#ff8833"};
           font-weight: normal;
         }
         
         .command-prompt {
-          color: ${state.lightMode ? '#0077cc' : '#ff8833'};
+          color: ${state.lightMode ? "#0077cc" : "#ff8833"};
           font-weight: bold;
         }
         
         .command-text {
-          color: ${state.lightMode ? '#0099ff' : '#ff6600'};
+          color: ${state.lightMode ? "#0099ff" : "#ff6600"};
         }
         
         .output-line-output {
-          color: ${state.lightMode ? '#0099ff' : '#ff6600'};
+          color: ${state.lightMode ? "#0099ff" : "#ff6600"};
         }
         
         .output-line-error {
-          color: ${state.lightMode ? '#ff3300' : '#cc0000'};
+          color: ${state.lightMode ? "#ff3300" : "#cc0000"};
           font-weight: bold;
-          text-shadow: 0 0 5px ${state.lightMode ? 'rgba(255, 51, 0, 0.5)' : 'rgba(204, 0, 0, 0.5)'};
+          text-shadow: 0 0 5px ${state.lightMode ? "rgba(255, 51, 0, 0.5)" : "rgba(204, 0, 0, 0.5)"};
         }
         
         .output-line-system {
-          color: ${state.lightMode ? '#4499ff' : '#bb66ff'};
+          color: ${state.lightMode ? "#4499ff" : "#bb66ff"};
           font-style: italic;
           font-weight: 500;
         }
@@ -137,12 +157,12 @@ export function OutputDisplay({ lines, maxLines = 1000 }: OutputDisplayProps) {
         }
         
         .output-display-container::-webkit-scrollbar-thumb {
-          background: ${state.lightMode ? '#66cc00' : '#9933ff'};
+          background: ${state.lightMode ? "#66cc00" : "#9933ff"};
           border-radius: 4px;
         }
         
         .output-display-container::-webkit-scrollbar-thumb:hover {
-          background: ${state.lightMode ? '#0099ff' : '#ff6600'};
+          background: ${state.lightMode ? "#0099ff" : "#ff6600"};
         }
       `}</style>
     </div>

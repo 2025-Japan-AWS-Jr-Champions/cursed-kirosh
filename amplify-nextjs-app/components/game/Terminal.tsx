@@ -3,6 +3,7 @@
 import { useGameContext } from "@/lib/game/GameContext";
 import { OutputDisplay } from "./OutputDisplay";
 import { CommandPrompt } from "./CommandPrompt";
+import { CursedText } from "./CursedText";
 import { useHints } from "@/hooks/useHints";
 import { useRef, useEffect, useState } from "react";
 
@@ -118,11 +119,11 @@ export function Terminal({ onCommand, disabled = false }: TerminalProps) {
       >
         {/* Welcome message - always shown */}
         <div className="terminal-welcome">
-          <p className="text-system">{">"} SYSTEM CURSED...</p>
-          <p className="text-system">{">"} MOST KEYS LOCKED...</p>
-          <p className="text-system">{">"} USE MORSE CODE TO UNLOCK...</p>
-          <p className="text-system">{">"} ONLY 's' AND 'o' AVAILABLE...</p>
-          <p className="mt-4 text-primary">Type 'help' for assistance</p>
+          <p className="text-system"><CursedText text="> SYSTEM CURSED..." delay={5000} /></p>
+          <p className="text-system"><CursedText text="> MOST KEYS LOCKED..." delay={5000} /></p>
+          <p className="text-system"><CursedText text="> USE MORSE CODE TO UNLOCK..." delay={5000} /></p>
+          <p className="text-system"><CursedText text="> ONLY 's' AND 'o' AVAILABLE..." delay={5000} /></p>
+          <p className="mt-4 text-primary"><CursedText text="Type 'help' for assistance" delay={5000} /></p>
         </div>
 
         {/* Output display */}
