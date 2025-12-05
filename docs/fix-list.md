@@ -7,14 +7,16 @@ after fixed, you showed check the checkbox.
 
 * [x] purple thin text is hard to see. so, if text is purple, make it all bold.
   * [x] in the cursed terminal, it is too thin.
-    * [ ] not fixed. instead of make it bold, how about make it lighter in terminal?
+    * [x] not fixed. instead of make it bold, how about make it lighter in terminal?
+      * [ ] moreover, make it bold too.
 * [x] gray thin text is hard to see. so, if text is gray, make it all bold.
   * [x] ok
 * [x] at cursed terminal, if user want to focus to command line input area for inputting some text, user must move cursor to just on the area. it is troublesome. if user clicked the inside of cursed terminal, make it focused on the input area.
   * [x] ok
 * [x] at virtual keyboard, there is some characters that included in morse dict, but no virtual keys. show all characters to virtual keyboard
   * [x] the numbers should be on upside of qwerty. like real keyboard.
-    * [ ] moreover, make all keys height half, for smaller space. also, symbols place to be right. so, left is qwerty with number, right is symbols. also, symbol keys must be grouped by similar symbols. there is no need to show labels for groups, just place keys nearly if same group, if different group, place a bit far.
+    * [x] moreover, make all keys height half, for smaller space. also, symbols place to be right. so, left is qwerty with number, right is symbols. also, symbol keys must be grouped by similar symbols. there is no need to show labels for groups, just place keys nearly if same group, if different group, place a bit far.
+      * [ ] the grouped symbols must be multiple lines. now it is 1 long line, so it is a bit difficult to see it. make it 4 lines to be easier to see.
 * [x] at virtual keyboard, now it is on right upper corner, but it is too small, and there is some space on bottom left corner, where is below of cursed terminal. fix the place to bottom left, and fix sizes(keyboard, keys, edges or anythings) to be the best. (of course, morse code input area must be right upper)
   * [x] now its bottom right. make it full wide. so, like below
     * [ ] ok
@@ -30,14 +32,19 @@ after fixed, you showed check the checkbox.
 * [x] show "leaderboard" button at the home page (before start game) place the button to the best place.
   * [x] ok
 * [x] at leaderboard, set back to top button instead of back to game button.
-* [ ] at terminal, i want auto scroll. by default, or focusing to typing area, auto scroll to bottom. when user scrolled to up, show down allow at the right bottom corner of terminal. if user clicked the allow button, auto scroll starts again.
-* [ ] at clear the game, now it is immediately show the modal of ending, so ending message in terminal has no time to be seen. make it some seconds when cleared the game to see the text in terminal.
+* [x] at terminal, i want auto scroll. by default, or focusing to typing area, auto scroll to bottom. when user scrolled to up, show down allow at the right bottom corner of terminal. if user clicked the allow button, auto scroll starts again.
+  * [ ] there is no allow button. check it and make it works.
+* [x] at clear the game, now it is immediately show the modal of ending, so ending message in terminal has no time to be seen. make it some seconds when cleared the game to see the text in terminal.
+  * [ ] too short. make it 10 seconds. and notice to user, how many seconds remain to see this text, and stepping to the next scene(clear modal)
+* [ ] at morse code input, when input succeeded, the "unlocked xxx" display is pushing down the virtual keyboard. the component of input is going to be bigger now. that's not beautiful. even if the "unlocked xxx" display is showing, make the morse component size not to change.
+* [ ] when cleared, if no player names inputted and user clicked play again or view leaderboard, notice to user, that some text like "if user don't submit score, the score is not recorded, and lost forever"
 
 ## Bug fix
 
 * [x] when reload top page or game page, a little bit time of showing raw html. that is not styled by css. the leaderboard page is ok. fix it.
   * [x] not fixed. ultrathink what is the reason, then fix it. - Fixed by adding inline critical CSS in layout head
-    * [ ] not fixed. how about use style.css file?
+    * [x] not fixed. how about use style.css file? - Fixed by using inline styles directly on html/body tags
+      * [ ] not fixed. think, think and think what is happens. fix it.
 * [x] the symbols are not locked. it seems like locked, locked in virtual keyboard, but we can type any symbols to cursed terminal. for example, at any time, we can type double quote, or any symbols.
   * [x] ok
 
@@ -45,4 +52,5 @@ after fixed, you showed check the checkbox.
 
 * [x] now ambience bgm is only using heartbeat. i want make it the morse code of "oss", because oss commands shows many morse code hints, it is useful, but i think most player don't type "oss". so, sounds like this. scream 3times, little bit blank, heartbeat 3times, little bit blank, heartbeat 3times, somehow big blank(to notice the end of the sentence.)
   * [x] excellent!! moreover, the ambience is not good, it was better that only heartbeat. so, most times plays heartbeat only like last one. and 20times old heartbeat sound played, play 2 times this one. however, the first play of this oss sound, 5 times of old heartbeat ends, and play. so, it will be like this, game start, 5times old slow ambience heartbeat, 2times oss sound, 20times old sound, 2times oss, 20times old, ... .
-    * [ ] there is bug. now it is repeat as 5times old heartbeat, 2times oss, and repeat. maybe it was little bit complex. so, fix it 10times old, 2times oss, 10times old, 2times oss, and repeat!
+    * [x] there is bug. now it is repeat as 5times old heartbeat, 2times oss, and repeat. maybe it was little bit complex. so, fix it 10times old, 2times oss, 10times old, 2times oss, and repeat!
+      * [ ] ok
