@@ -5,9 +5,9 @@ applications:
         preBuild:
           commands:
             - npm cache clean --force
-            - cd amplify && npm ci
+            - cd amplify && npm install
             - cd ..
-            - npm ci
+            - npm install
         build:
           commands:
             - npm run build
