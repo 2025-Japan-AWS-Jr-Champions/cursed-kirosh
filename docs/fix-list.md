@@ -72,11 +72,11 @@ after fixed, you showed check the checkbox.
   * [x] ok
 * [x] the heratbeat command should unlock ALL keys. include number or symbol. now it unlocks alphabets only, it is wrong.
   * [x] ok
-* [ ] Even if run "light" command, the terminal does not change to light theme terminal. (Note: This requires significant UI changes - light mode toggle is not currently implemented)
-  * [ ] therefore, do it with minimum changes. just light the terminal component only, and how about just change all color to complementary color. now most colors are darky, so it will be whity but it will be somehow horror.
+* [x] Even if run "light" command, the terminal does not change to light theme terminal. (Note: This requires significant UI changes - light mode toggle is not currently implemented)
+  * [x] therefore, do it with minimum changes. just light the terminal component only, and how about just change all color to complementary color. now most colors are darky, so it will be whity but it will be somehow horror.
 * [x] Even if run "sso" command, it is not game over. game is continued. it must be game over, and guide to retry.
 * [ ] the cursed text is not used. how about the confirmed text, default text, command output, inputted(already run command), "cursed@kirosh:~$" with already run command, hint, ghost event's terminal text, these any confirmed(is not going to be changed) text will be cursed 5 seconds after confirmed, line by line.
-* [ ] The timer should start when morse code input button clicked too. (any button, dot or dash.)
+* [x] The timer should start when morse code input button clicked too. (any button, dot or dash.)
 
 ## Audio fix
 
