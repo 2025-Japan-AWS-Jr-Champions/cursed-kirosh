@@ -248,6 +248,27 @@ function GameContent() {
       <footer className="game-footer">
         <div className="attribution-container">
           <div className="attribution-item">
+            <span className="attribution-label">Game Design:</span>{" "}
+            <a
+              href="https://x.com/amixedcolor"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="attribution-link"
+            >
+              @amixedcolor
+            </a>
+            {" & "}
+            <a
+              href="https://x.com/ryudai_dayo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="attribution-link"
+            >
+              @ryudai
+            </a>
+          </div>
+          <div className="attribution-divider">•</div>
+          <div className="attribution-item">
             <span className="attribution-label">Sound Effects:</span>{" "}
             <a
               href="https://otologic.jp/free/license.html"

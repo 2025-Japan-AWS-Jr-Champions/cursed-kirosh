@@ -101,6 +101,26 @@ export default function Home() {
           <h2 className="section-title">Credits</h2>
           <div className="credits-content">
             <p className="credit-item">
+              <span className="credit-label">Game Design:</span>{" "}
+              <a
+                href="https://x.com/amixedcolor"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="credit-link"
+              >
+                @amixedcolor
+              </a>
+              {" & "}
+              <a
+                href="https://x.com/ryudai_dayo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="credit-link"
+              >
+                @ryudai
+              </a>
+            </p>
+            <p className="credit-item">
               <span className="credit-label">Sound Effects:</span>{" "}
               <a
                 href="https://otologic.jp/free/license.html"
@@ -114,10 +134,6 @@ export default function Home() {
             <p className="credit-item">
               <span className="credit-label">Ghost Image:</span>{" "}
               <span className="credit-value">©DESIGNALIKIE</span>
-            </p>
-            <p className="credit-item">
-              <span className="credit-label">Game Design:</span>{" "}
-              <span className="credit-value">Cursed Kirosh Team</span>
             </p>
           </div>
         </div>

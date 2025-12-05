@@ -243,6 +243,49 @@ export default function LeaderboardPage() {
         <div className="mt-8 text-center text-sm text-gray-500">
           <p>Showing top {entries.length} players</p>
         </div>
+
+        {/* Attribution Footer */}
+        <footer className="mt-12 pt-6 border-t border-purple-500/30 text-center">
+          <div className="flex items-center justify-center gap-4 flex-wrap text-sm text-gray-400">
+            <div>
+              <span className="text-orange-400 font-semibold">Game Design:</span>{" "}
+              <a
+                href="https://x.com/amixedcolor"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-orange-500 hover:text-orange-400 transition-colors"
+              >
+                @amixedcolor
+              </a>
+              {" & "}
+              <a
+                href="https://x.com/ryudai_dayo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-orange-500 hover:text-orange-400 transition-colors"
+              >
+                @ryudai
+              </a>
+            </div>
+            <span className="text-purple-500">•</span>
+            <div>
+              <span className="text-orange-400 font-semibold">Sound Effects:</span>{" "}
+              <a
+                href="https://otologic.jp/free/license.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-orange-500 hover:text-orange-400 transition-colors"
+              >
+                OtoLogic
+              </a>
+            </div>
+            <span className="text-purple-500">•</span>
+            <div>
+              <span className="text-orange-400 font-semibold">Ghost Image:</span>{" "}
+              <span className="text-orange-500">©DESIGNALIKIE</span>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );
