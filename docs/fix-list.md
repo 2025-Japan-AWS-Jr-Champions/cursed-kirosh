@@ -48,7 +48,7 @@ after fixed, you showed check the checkbox.
     * [ ] ok
 * [x] when cleared, if no player names inputted and user clicked play again or view leaderboard, notice to user, that some text like "if user don't submit score, the score is not recorded, and lost forever"
   * [x] the browser default alert is not beautiful. make some modal in same design.
-* [ ] show the elapsed time with horror design.
+* [ ] show the elapsed time with horror design only when it is develop environment as well as test trigger ghost event button.
 * [ ] the left and right of "Waiting for input..." is a bit narrow. make the letter smaller or make the box wider.
 
 ## Bug fix
