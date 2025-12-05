@@ -8,6 +8,7 @@ applications:
             - cd amplify && npm install
             - cd ..
             - npm install
+            - npx ampx generate outputs --branch $AWS_BRANCH --app-id $AWS_APP_ID --profile kirosh
         build:
           commands:
             - npm run build
