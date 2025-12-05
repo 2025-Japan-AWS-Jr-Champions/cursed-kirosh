@@ -347,9 +347,9 @@ npx ampx generate outputs --profile kirosh
 
 ## 🎃 Credits
 
+- **Game Design**: [@amixedcolor](https://x.com/amixedcolor) & [@ryudai](https://x.com/ryudai_dayo)
 - **Sound Effects**: [OtoLogic](https://otologic.jp/free/license.html)
 - **Ghost Image**: ©DESIGNALIKIE
-- **Game Design**: Cursed Kirosh Team
 - **Built with**: Kiro AI Assistant
 
 ## 📝 License

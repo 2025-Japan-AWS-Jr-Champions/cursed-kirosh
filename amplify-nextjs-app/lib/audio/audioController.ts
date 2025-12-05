@@ -22,6 +22,8 @@ class AudioControllerImpl implements AudioController {
   private gainNode: GainNode | null = null;
   private volume = 0.5;
   public isLoaded = false;
+  private ambientTimeoutId: number | null = null;
+  private ambientHeartbeatCount = 0;
 
   constructor() {
     if (typeof window !== "undefined") {
@@ -82,22 +84,31 @@ class AudioControllerImpl implements AudioController {
 
       const source = this.audioContext.createBufferSource();
       source.buffer = this.heartbeatBuffer;
-      
+
       // Create a gain node for this specific sound for fade effects
       const soundGain = this.audioContext.createGain();
       soundGain.connect(this.gainNode);
-      
+
       // Quick fade in for smoother playback
       soundGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-      soundGain.gain.linearRampToValueAtTime(1, this.audioContext.currentTime + 0.05);
-      
+      soundGain.gain.linearRampToValueAtTime(
+        1,
+        this.audioContext.currentTime + 0.05,
+      );
+
       source.connect(soundGain);
       source.start(0);
-      
+
       // Fade out at the end
       const duration = this.heartbeatBuffer.duration;
-      soundGain.gain.setValueAtTime(1, this.audioContext.currentTime + duration - 0.1);
-      soundGain.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + duration);
+      soundGain.gain.setValueAtTime(
+        1,
+        this.audioContext.currentTime + duration - 0.1,
+      );
+      soundGain.gain.linearRampToValueAtTime(
+        0,
+        this.audioContext.currentTime + duration,
+      );
     } catch (error) {
       console.error("Failed to play heartbeat:", error);
     }
@@ -116,29 +127,43 @@ class AudioControllerImpl implements AudioController {
 
       const source = this.audioContext.createBufferSource();
       source.buffer = this.screamBuffer;
-      
+
       // Create a gain node for this specific sound for fade effects
       const soundGain = this.audioContext.createGain();
       soundGain.connect(this.gainNode);
-      
+
       // Quick fade in for smoother playback
       soundGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-      soundGain.gain.linearRampToValueAtTime(1, this.audioContext.currentTime + 0.05);
-      
+      soundGain.gain.linearRampToValueAtTime(
+        1,
+        this.audioContext.currentTime + 0.05,
+      );
+
       source.connect(soundGain);
       source.start(0);
-      
+
       // Fade out at the end
       const duration = this.screamBuffer.duration;
-      soundGain.gain.setValueAtTime(1, this.audioContext.currentTime + duration - 0.1);
-      soundGain.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + duration);
+      soundGain.gain.setValueAtTime(
+        1,
+        this.audioContext.currentTime + duration - 0.1,
+      );
+      soundGain.gain.linearRampToValueAtTime(
+        0,
+        this.audioContext.currentTime + duration,
+      );
     } catch (error) {
       console.error("Failed to play scream:", error);
     }
   }
 
   playAmbientHeartbeat(): void {
-    if (!this.audioContext || !this.heartbeatBuffer || !this.gainNode) {
+    if (
+      !this.audioContext ||
+      !this.heartbeatBuffer ||
+      !this.screamBuffer ||
+      !this.gainNode
+    ) {
       return;
     }
 
@@ -153,27 +178,132 @@ class AudioControllerImpl implements AudioController {
 
       // Create a separate gain node for ambient with lower volume
       this.ambientGain = this.audioContext.createGain();
-      this.ambientGain.gain.value = 0; // Start at 0 for fade in
+      this.ambientGain.gain.value = 0.3; // Lower volume for ambient
       this.ambientGain.connect(this.gainNode);
-      
-      this.ambientSource = this.audioContext.createBufferSource();
-      this.ambientSource.buffer = this.heartbeatBuffer;
-      this.ambientSource.loop = true;
-      this.ambientSource.connect(this.ambientGain);
-      
-      // Fade in the ambient sound over 2 seconds
-      this.ambientGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-      this.ambientGain.gain.linearRampToValueAtTime(0.4, this.audioContext.currentTime + 2);
-      
-      this.ambientSource.start(0);
-      
-      console.log("Ambient heartbeat started");
+
+      // Reset counter and start pattern
+      this.ambientHeartbeatCount = 0;
+      this.playAmbientPattern();
+
+      console.log("Ambient pattern started");
     } catch (error) {
-      console.error("Failed to play ambient heartbeat:", error);
+      console.error("Failed to play ambient:", error);
     }
   }
 
+  private playAmbientPattern(): void {
+    if (!this.audioContext || !this.ambientGain || !this.heartbeatBuffer)
+      return;
+
+    // Pattern: 10 heartbeats, 2 OSS, 10 heartbeats, 2 OSS, repeat...
+    let shouldPlayOSS = false;
+    let ossCount = 0;
+
+    if (this.ambientHeartbeatCount >= 10) {
+      // After 10 heartbeats, play 2 OSS
+      shouldPlayOSS = true;
+      ossCount = 2;
+      this.ambientHeartbeatCount = 0; // Reset counter
+    }
+
+    if (shouldPlayOSS) {
+      // Play OSS sequences
+      this.playOSSSequences(ossCount);
+    } else {
+      // Play single heartbeat
+      this.playSingleAmbientHeartbeat();
+    }
+  }
+
+  private playSingleAmbientHeartbeat(): void {
+    if (!this.audioContext || !this.heartbeatBuffer || !this.ambientGain)
+      return;
+
+    const source = this.audioContext.createBufferSource();
+    source.buffer = this.heartbeatBuffer;
+    source.connect(this.ambientGain);
+    source.start(0);
+
+    this.ambientHeartbeatCount++;
+
+    // Schedule next heartbeat (slower pace for ambient)
+    const heartbeatInterval = 1500; // 1.5 seconds between heartbeats
+    this.ambientTimeoutId = window.setTimeout(() => {
+      if (this.ambientGain) {
+        this.playAmbientPattern();
+      }
+    }, heartbeatInterval);
+  }
+
+  private playOSSSequences(count: number): void {
+    if (!this.audioContext || !this.ambientGain) return;
+
+    let currentTime = this.audioContext.currentTime;
+    const dotDuration = 0.2;
+    const dashDuration = 0.6;
+    const gapBetweenSignals = 0.3;
+    const gapBetweenLetters = 0.8;
+    const gapBetweenWords = 2.0;
+
+    // Play OSS sequence 'count' times
+    for (let seq = 0; seq < count; seq++) {
+      // O = --- (dash dash dash)
+      for (let i = 0; i < 3; i++) {
+        this.scheduleScream(currentTime);
+        currentTime += dashDuration + gapBetweenSignals;
+      }
+      currentTime += gapBetweenLetters - gapBetweenSignals;
+
+      // S = ... (dot dot dot)
+      for (let i = 0; i < 3; i++) {
+        this.scheduleHeartbeat(currentTime);
+        currentTime += dotDuration + gapBetweenSignals;
+      }
+      currentTime += gapBetweenLetters - gapBetweenSignals;
+
+      // S = ... (dot dot dot)
+      for (let i = 0; i < 3; i++) {
+        this.scheduleHeartbeat(currentTime);
+        currentTime += dotDuration + gapBetweenSignals;
+      }
+      currentTime += gapBetweenWords;
+    }
+
+    // Schedule next pattern after OSS sequences complete
+    const totalDuration = (currentTime - this.audioContext.currentTime) * 1000;
+    this.ambientTimeoutId = window.setTimeout(() => {
+      if (this.ambientGain) {
+        this.playAmbientPattern();
+      }
+    }, totalDuration);
+  }
+
+  private scheduleHeartbeat(startTime: number): void {
+    if (!this.audioContext || !this.heartbeatBuffer || !this.ambientGain)
+      return;
+
+    const source = this.audioContext.createBufferSource();
+    source.buffer = this.heartbeatBuffer;
+    source.connect(this.ambientGain);
+    source.start(startTime);
+  }
+
+  private scheduleScream(startTime: number): void {
+    if (!this.audioContext || !this.screamBuffer || !this.ambientGain) return;
+
+    const source = this.audioContext.createBufferSource();
+    source.buffer = this.screamBuffer;
+    source.connect(this.ambientGain);
+    source.start(startTime);
+  }
+
   stopAmbientHeartbeat(): void {
+    // Clear any pending timeouts
+    if (this.ambientTimeoutId !== null) {
+      clearTimeout(this.ambientTimeoutId);
+      this.ambientTimeoutId = null;
+    }
+
     if (this.ambientSource) {
       try {
         this.ambientSource.stop();
@@ -183,7 +313,7 @@ class AudioControllerImpl implements AudioController {
       }
       this.ambientSource = null;
     }
-    
+
     if (this.ambientGain) {
       try {
         this.ambientGain.disconnect();
@@ -192,7 +322,10 @@ class AudioControllerImpl implements AudioController {
       }
       this.ambientGain = null;
     }
-    
+
+    // Reset counter
+    this.ambientHeartbeatCount = 0;
+
     console.log("Ambient heartbeat stopped");
   }
 

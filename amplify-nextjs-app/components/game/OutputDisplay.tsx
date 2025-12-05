@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef } from 'react';
-import type { OutputLine } from '@/lib/game/types';
+import type React from "react";
+import { useEffect, useRef } from "react";
+import type { OutputLine } from "@/lib/game/types";
 
 interface OutputDisplayProps {
   lines: OutputLine[];
@@ -15,8 +16,13 @@ interface OutputDisplayProps {
 export function OutputDisplay({ lines, maxLines = 1000 }: OutputDisplayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldAutoScroll = useRef(true);
+  
+  // Import game context for light mode
+  const { useGameContext } = require('@/lib/game/GameContext');
+  const { state } = useGameContext();
 
   // Auto-scroll to bottom when new lines are added
+  // biome-ignore lint/correctness/useExhaustiveDependencies: lines is a prop and needs to trigger scroll
   useEffect(() => {
     if (shouldAutoScroll.current && containerRef.current) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
@@ -35,26 +41,26 @@ export function OutputDisplay({ lines, maxLines = 1000 }: OutputDisplayProps) {
   // Limit displayed lines to maxLines
   const displayedLines = lines.slice(-maxLines);
 
-  const getLineClassName = (type: OutputLine['type']): string => {
+  const getLineClassName = (type: OutputLine["type"]): string => {
     switch (type) {
-      case 'command':
-        return 'output-line-command';
-      case 'output':
-        return 'output-line-output';
-      case 'error':
-        return 'output-line-error';
-      case 'system':
-        return 'output-line-system';
+      case "command":
+        return "output-line-command";
+      case "output":
+        return "output-line-output";
+      case "error":
+        return "output-line-error";
+      case "system":
+        return "output-line-system";
       default:
-        return 'output-line-output';
+        return "output-line-output";
     }
   };
 
   const formatLine = (line: OutputLine): React.ReactNode => {
-    if (line.type === 'command') {
+    if (line.type === "command") {
       return (
         <>
-          <span className="command-prompt">cursed@kirosh:~$</span>{' '}
+          <span className="command-prompt">cursed@kirosh:~$</span>{" "}
           <span className="command-text">{line.text}</span>
         </>
       );
@@ -63,20 +69,20 @@ export function OutputDisplay({ lines, maxLines = 1000 }: OutputDisplayProps) {
   };
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className="output-display-container"
       onScroll={handleScroll}
     >
       {displayedLines.map((line) => (
-        <div 
-          key={line.id} 
+        <div
+          key={line.id}
           className={`output-line ${getLineClassName(line.type)}`}
         >
           {formatLine(line)}
         </div>
       ))}
-      
+
       <style jsx>{`
         .output-display-container {
           flex: 1;
@@ -92,32 +98,33 @@ export function OutputDisplay({ lines, maxLines = 1000 }: OutputDisplayProps) {
         }
         
         .output-line-command {
-          color: #ff8833;
+          color: ${state.lightMode ? '#0077cc' : '#ff8833'};
           font-weight: normal;
         }
         
         .command-prompt {
-          color: #ff8833;
+          color: ${state.lightMode ? '#0077cc' : '#ff8833'};
           font-weight: bold;
         }
         
         .command-text {
-          color: #ff6600;
+          color: ${state.lightMode ? '#0099ff' : '#ff6600'};
         }
         
         .output-line-output {
-          color: #ff6600;
+          color: ${state.lightMode ? '#0099ff' : '#ff6600'};
         }
         
         .output-line-error {
-          color: #cc0000;
+          color: ${state.lightMode ? '#ff3300' : '#cc0000'};
           font-weight: bold;
-          text-shadow: 0 0 5px rgba(204, 0, 0, 0.5);
+          text-shadow: 0 0 5px ${state.lightMode ? 'rgba(255, 51, 0, 0.5)' : 'rgba(204, 0, 0, 0.5)'};
         }
         
         .output-line-system {
-          color: #8b00ff;
+          color: ${state.lightMode ? '#4499ff' : '#bb66ff'};
           font-style: italic;
+          font-weight: 500;
         }
         
         /* Scrollbar styling */
@@ -130,12 +137,12 @@ export function OutputDisplay({ lines, maxLines = 1000 }: OutputDisplayProps) {
         }
         
         .output-display-container::-webkit-scrollbar-thumb {
-          background: #9933ff;
+          background: ${state.lightMode ? '#66cc00' : '#9933ff'};
           border-radius: 4px;
         }
         
         .output-display-container::-webkit-scrollbar-thumb:hover {
-          background: #ff6600;
+          background: ${state.lightMode ? '#0099ff' : '#ff6600'};
         }
       `}</style>
     </div>

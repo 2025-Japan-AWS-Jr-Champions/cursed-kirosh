@@ -43,14 +43,25 @@ export default function Home() {
         </div>
 
         {/* Start Game Button */}
-        <button
-          type="button"
-          onClick={handleStartGame}
-          className="start-button"
-        >
-          <span className="button-text">START GAME</span>
-          <span className="button-glow" />
-        </button>
+        <div className="button-group">
+          <button
+            type="button"
+            onClick={handleStartGame}
+            className="start-button"
+          >
+            <span className="button-text">START GAME</span>
+            <span className="button-glow" />
+          </button>
+          
+          <button
+            type="button"
+            onClick={() => router.push("/leaderboard")}
+            className="leaderboard-button"
+          >
+            <span className="button-text">🏆 LEADERBOARD</span>
+            <span className="button-glow" />
+          </button>
+        </div>
 
         {/* Instructions */}
         <div className="instructions-section">
@@ -101,6 +112,26 @@ export default function Home() {
           <h2 className="section-title">Credits</h2>
           <div className="credits-content">
             <p className="credit-item">
+              <span className="credit-label">Game Design:</span>{" "}
+              <a
+                href="https://x.com/amixedcolor"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="credit-link"
+              >
+                @amixedcolor
+              </a>
+              {" & "}
+              <a
+                href="https://x.com/ryudai_dayo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="credit-link"
+              >
+                @ryudai
+              </a>
+            </p>
+            <p className="credit-item">
               <span className="credit-label">Sound Effects:</span>{" "}
               <a
                 href="https://otologic.jp/free/license.html"
@@ -114,10 +145,6 @@ export default function Home() {
             <p className="credit-item">
               <span className="credit-label">Ghost Image:</span>{" "}
               <span className="credit-value">©DESIGNALIKIE</span>
-            </p>
-            <p className="credit-item">
-              <span className="credit-label">Game Design:</span>{" "}
-              <span className="credit-value">Cursed Kirosh Team</span>
             </p>
           </div>
         </div>
@@ -220,11 +247,19 @@ export default function Home() {
           text-shadow: 0 0 10px rgba(255, 102, 0, 0.5);
         }
 
-        /* Start Button */
-        .start-button {
-          position: relative;
-          display: block;
+        /* Button Group */
+        .button-group {
+          display: flex;
+          gap: 20px;
+          justify-content: center;
           margin: 0 auto 48px;
+          flex-wrap: wrap;
+        }
+
+        /* Start Button */
+        .start-button,
+        .leaderboard-button {
+          position: relative;
           padding: 20px 60px;
           font-size: 24px;
           font-weight: bold;
@@ -239,13 +274,22 @@ export default function Home() {
                       0 0 40px rgba(153, 51, 255, 0.3);
         }
 
-        .start-button:hover {
+        .leaderboard-button {
+          background: linear-gradient(135deg, #9933ff 0%, #aa44ff 100%);
+          border: 3px solid #ff6600;
+          box-shadow: 0 0 20px rgba(153, 51, 255, 0.5),
+                      0 0 40px rgba(255, 102, 0, 0.3);
+        }
+
+        .start-button:hover,
+        .leaderboard-button:hover {
           transform: translateY(-4px);
           box-shadow: 0 0 30px rgba(255, 102, 0, 0.8),
                       0 0 60px rgba(153, 51, 255, 0.5);
         }
 
-        .start-button:active {
+        .start-button:active,
+        .leaderboard-button:active {
           transform: translateY(-2px);
         }
 

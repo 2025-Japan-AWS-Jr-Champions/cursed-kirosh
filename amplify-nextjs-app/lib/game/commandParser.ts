@@ -185,6 +185,7 @@ function executeCd(args: string[]): CommandResult {
 
 /**
  * Execute echo command - display text
+ * Trims surrounding quotes if present
  */
 function executeEcho(args: string[]): CommandResult {
   if (args.length === 0) {
@@ -195,7 +196,13 @@ function executeEcho(args: string[]): CommandResult {
     };
   }
 
-  const text = args.join(" ");
+  let text = args.join(" ");
+  
+  // Trim surrounding quotes if text starts and ends with "
+  if (text.startsWith('"') && text.endsWith('"') && text.length > 1) {
+    text = text.slice(1, -1);
+  }
+  
   return {
     success: true,
     output: text,
@@ -276,23 +283,31 @@ The spirits of open source guide you...
 }
 
 /**
- * Execute SSO command - game over
+ * Execute SSO command - game over (bad ending)
  */
 function executeSSO(): CommandExecutionResult {
   const output = `
+╔════════════════════════════════════════╗
+║           GAME OVER                    ║
+╚════════════════════════════════════════╝
+
 Single Sign-On... to the void.
 
 You have been logged out of existence.
 The curse consumes all.
 
-GAME OVER
+You have failed to escape.
+Type 'exit' or use another command to try again.
   `.trim();
 
   return {
     success: true,
     output,
     type: "error",
-    actions: [{ type: "DISCOVER_SECRET", secret: "sso" }],
+    actions: [
+      { type: "DISCOVER_SECRET", secret: "sso" },
+      { type: "END_GAME", ending: "sso" }
+    ],
   };
 }
 
@@ -319,13 +334,13 @@ Keep trying. The escape is within reach.
 }
 
 /**
- * Execute heartbeat command - unlock all alphabetic characters
+ * Execute heartbeat command - unlock ALL characters (letters, numbers, symbols)
  */
 function executeHeartbeat(): CommandExecutionResult {
-  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  const allChars = "abcdefghijklmnopqrstuvwxyz0123456789 .,!?-_'/()&:;=+\"$@";
   const actions: GameAction[] = [
     { type: "DISCOVER_SECRET", secret: "heartbeat" },
-    ...alphabet.split("").map((char) => ({
+    ...allChars.split("").map((char) => ({
       type: "UNLOCK_CHARACTER" as const,
       character: char,
     })),
@@ -335,7 +350,8 @@ function executeHeartbeat(): CommandExecutionResult {
 ♥ HEARTBEAT DETECTED ♥
 
 The curse weakens...
-All alphabetic characters have been unlocked!
+ALL characters have been unlocked!
+(Letters, numbers, and symbols)
 
 You can now type freely. Use this power wisely.
   `.trim();
@@ -387,7 +403,7 @@ function executeHelp(): CommandResult {
   oss             - Open source projects (Morse encoded)
   sso             - Single sign-on (warning!)
   soso            - Encouragement
-  heartbeat       - Unlock all alphabetic characters
+  heartbeat       - Unlock ALL characters (letters, numbers, symbols)
   light           - Toggle light/dark mode
 
 🎃 ENDINGS (Multiple ways to escape!):
@@ -601,10 +617,26 @@ The true hero's ending.
 
 /**
  * Check if echo command triggers Engineer Ending
+ * Accepts variations: "Hello, world!", "Hello, World!", "Hello world!", "Hello World!"
+ * Also accepts with surrounding quotes
  */
 function checkEngineerEnding(args: string[]): boolean {
-  const text = args.join(" ");
-  return text === "Hello, world!";
+  let text = args.join(" ");
+  
+  // Remove surrounding quotes if present
+  if (text.startsWith('"') && text.endsWith('"') && text.length > 1) {
+    text = text.slice(1, -1);
+  }
+  
+  // Check against all accepted variations (case-insensitive for "world")
+  const acceptedVariations = [
+    "Hello, world!",
+    "Hello, World!",
+    "Hello world!",
+    "Hello World!",
+  ];
+  
+  return acceptedVariations.includes(text);
 }
 
 /**
