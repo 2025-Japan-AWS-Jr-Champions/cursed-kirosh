@@ -69,7 +69,8 @@
         "insert_after_symbol",
         "read_file",
         "write_memory",
-        "list_memories"
+        "list_memories",
+        "find_file"
       ]
     },
     "fetch": {
