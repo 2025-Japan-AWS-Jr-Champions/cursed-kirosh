@@ -8,7 +8,8 @@ after fixed, you showed check the checkbox.
 * [x] purple thin text is hard to see. so, if text is purple, make it all bold.
   * [x] in the cursed terminal, it is too thin.
     * [x] not fixed. instead of make it bold, how about make it lighter in terminal?
-      * [ ] moreover, make it bold too.
+      * [x] moreover, make it bold too.
+        * [ ] when the command typed like sos, the output is purple text but it seems not light and not bold. fix them at all. "trick or treat"'s ghost messages are same too.
 * [x] gray thin text is hard to see. so, if text is gray, make it all bold.
   * [x] ok
 * [x] at cursed terminal, if user want to focus to command line input area for inputting some text, user must move cursor to just on the area. it is troublesome. if user clicked the inside of cursed terminal, make it focused on the input area.
@@ -16,7 +17,8 @@ after fixed, you showed check the checkbox.
 * [x] at virtual keyboard, there is some characters that included in morse dict, but no virtual keys. show all characters to virtual keyboard
   * [x] the numbers should be on upside of qwerty. like real keyboard.
     * [x] moreover, make all keys height half, for smaller space. also, symbols place to be right. so, left is qwerty with number, right is symbols. also, symbol keys must be grouped by similar symbols. there is no need to show labels for groups, just place keys nearly if same group, if different group, place a bit far.
-      * [ ] the grouped symbols must be multiple lines. now it is 1 long line, so it is a bit difficult to see it. make it 4 lines to be easier to see.
+      * [x] the grouped symbols must be multiple lines. now it is 1 long line, so it is a bit difficult to see it. make it 4 lines to be easier to see.
+        * [ ] good. make qwerty and symbols closer. qwerty and symbols keys are pair, and it must be align center.
 * [x] at virtual keyboard, now it is on right upper corner, but it is too small, and there is some space on bottom left corner, where is below of cursed terminal. fix the place to bottom left, and fix sizes(keyboard, keys, edges or anythings) to be the best. (of course, morse code input area must be right upper)
   * [x] now its bottom right. make it full wide. so, like below
     * [ ] ok
@@ -33,18 +35,23 @@ after fixed, you showed check the checkbox.
   * [x] ok
 * [x] at leaderboard, set back to top button instead of back to game button.
 * [x] at terminal, i want auto scroll. by default, or focusing to typing area, auto scroll to bottom. when user scrolled to up, show down allow at the right bottom corner of terminal. if user clicked the allow button, auto scroll starts again.
-  * [ ] there is no allow button. check it and make it works.
+  * [x] there is no allow button. check it and make it works.
+    * [ ] there is button and it works. but auto scroll down is not working. for example, when command inputted, output shows but there is no scroll. fix it.
 * [x] at clear the game, now it is immediately show the modal of ending, so ending message in terminal has no time to be seen. make it some seconds when cleared the game to see the text in terminal.
-  * [ ] too short. make it 10 seconds. and notice to user, how many seconds remain to see this text, and stepping to the next scene(clear modal)
-* [ ] at morse code input, when input succeeded, the "unlocked xxx" display is pushing down the virtual keyboard. the component of input is going to be bigger now. that's not beautiful. even if the "unlocked xxx" display is showing, make the morse component size not to change.
-* [ ] when cleared, if no player names inputted and user clicked play again or view leaderboard, notice to user, that some text like "if user don't submit score, the score is not recorded, and lost forever"
+  * [x] too short. make it 10 seconds. and notice to user, how many seconds remain to see this text, and stepping to the next scene(clear modal)
+    * [ ] the notice is too noisy. and it overlaps the terminal text. make it the best place.
+* [x] at morse code input, when input succeeded, the "unlocked xxx" display is pushing down the virtual keyboard. the component of input is going to be bigger now. that's not beautiful. even if the "unlocked xxx" display is showing, make the morse component size not to change.
+  * [ ] good. moreover, the "Current Sequence:" text place is moving. if no morse code inputting, the text is at top. if inputting, text changes the place to a bit down in the screen. make it not to move.
+* [x] when cleared, if no player names inputted and user clicked play again or view leaderboard, notice to user, that some text like "if user don't submit score, the score is not recorded, and lost forever"
+  * [ ] the browser default alert is not beautiful. make some modal in same design.
 
 ## Bug fix
 
 * [x] when reload top page or game page, a little bit time of showing raw html. that is not styled by css. the leaderboard page is ok. fix it.
   * [x] not fixed. ultrathink what is the reason, then fix it. - Fixed by adding inline critical CSS in layout head
     * [x] not fixed. how about use style.css file? - Fixed by using inline styles directly on html/body tags
-      * [ ] not fixed. think, think and think what is happens. fix it.
+      * [x] not fixed. think, think and think what is happens. fix it. - Fixed by using dangerouslySetInnerHTML in head for critical CSS
+        * [ ] loading is not working maybe. i cant see any loading object, and can see the raw html a bit time still.
 * [x] the symbols are not locked. it seems like locked, locked in virtual keyboard, but we can type any symbols to cursed terminal. for example, at any time, we can type double quote, or any symbols.
   * [x] ok
 
