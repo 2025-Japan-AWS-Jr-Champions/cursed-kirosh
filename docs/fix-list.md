@@ -22,7 +22,7 @@ after fixed, you showed check the checkbox.
       * [x] the grouped symbols must be multiple lines. now it is 1 long line, so it is a bit difficult to see it. make it 4 lines to be easier to see.
         * [x] good. make qwerty and symbols closer. qwerty and symbols keys are pair, and it must be align center.
           * [x] not fixed. both are apart. make it closer. think.
-            * [ ] good. now, the symbols keys are repeating 2 blocks. the left block want to be justify end, the right block want to be justify start(as same as now)
+            * [x] good. now, the symbols keys are repeating 2 blocks. the left block want to be justify end, the right block want to be justify start(as same as now)
 * [x] at virtual keyboard, now it is on right upper corner, but it is too small, and there is some space on bottom left corner, where is below of cursed terminal. fix the place to bottom left, and fix sizes(keyboard, keys, edges or anythings) to be the best. (of course, morse code input area must be right upper)
   * [x] now its bottom right. make it full wide. so, like below
     * [ ] ok
@@ -41,7 +41,7 @@ after fixed, you showed check the checkbox.
 * [x] at terminal, i want auto scroll. by default, or focusing to typing area, auto scroll to bottom. when user scrolled to up, show down allow at the right bottom corner of terminal. if user clicked the allow button, auto scroll starts again.
   * [x] there is no allow button. check it and make it works.
     * [x] there is button and it works. but auto scroll down is not working. for example, when command inputted, output shows but there is no scroll. fix it.
-      * [ ] ok
+      * [ ] remain task. when type the key that is locked, there is error message, but auto scroll to error message is not working.
 * [x] at clear the game, now it is immediately show the modal of ending, so ending message in terminal has no time to be seen. make it some seconds when cleared the game to see the text in terminal.
   * [x] too short. make it 10 seconds. and notice to user, how many seconds remain to see this text, and stepping to the next scene(clear modal)
     * [x] the notice is too noisy. and it overlaps the terminal text. make it the best place.
@@ -54,6 +54,8 @@ after fixed, you showed check the checkbox.
   * [ ] ok
 * [x] the left and right of "Waiting for input..." is a bit narrow. make the letter smaller or make the box wider.
   * [ ] ok
+* [ ] at echo command, if echoing text are starts with " and ends with ", output must trim it. However, the " "in" text must not be trimmed.
+* [ ] Engineer Ending should accept similar commands. now accept `echo Hello, world!` only, but should accept the `Hello, world!` part text are `Hello, World!`, `Hello world!`, `Hello World!`. and also, accept even if this part of text are wrapped by double quotes, ex. `echo "Hello, World!"
 
 ## Bug fix
 
@@ -68,7 +70,10 @@ after fixed, you showed check the checkbox.
   * [ ] ok
 * [x] if ghost event failed with typo, must show the message in terminal, which different with "Too late! The ghost has re-locked your characters"
   * [ ] ok
-* [ ] the heratbeat command should unlock ALL keys. include number or symbol. now it unlocks alphabets only, it is wrong.
+* [x] the heratbeat command should unlock ALL keys. include number or symbol. now it unlocks alphabets only, it is wrong.
+  * [ ] ok
+* [ ] Even if run "light" command, the terminal does not change to light theme terminal.
+* [ ] Even if run "sso" command, it is not game over. game is continued. it must be game over, and guide to retry.
 
 ## Audio fix
 
