@@ -367,6 +367,28 @@ body > * {
   color: var(--text-error);
 }
 
+/* ===== TEXT COLOR FIXES - Make purple and gray text semi-bold for readability ===== */
+[style*="color: #9933ff"],
+[style*="color: #8b00ff"],
+[style*="color: rgb(153, 51, 255)"],
+[style*="color: rgb(139, 0, 255)"],
+.text-purple-300,
+.text-purple-400,
+.text-purple-500,
+.text-purple-600 {
+  font-weight: 600 !important;
+}
+
+[style*="color: #666"],
+[style*="color: #666666"],
+[style*="color: rgb(102, 102, 102)"],
+.text-gray-300,
+.text-gray-400,
+.text-gray-500,
+.text-gray-600 {
+  font-weight: bold !important;
+}
+
 /* ===== HALLOWEEN THEMED BUTTONS ===== */
 .btn-halloween-orange {
   background: linear-gradient(135deg, var(--accent-orange) 0%, #ff8833 100%);

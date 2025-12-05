@@ -7,7 +7,7 @@ import Image from "next/image";
 interface GhostEventProps {
   isActive: boolean;
   onTreat: () => void;
-  onTrick: () => void;
+  onTrick: (isTypo?: boolean) => void;
   timeLimit: number; // in seconds
 }
 
@@ -80,10 +80,10 @@ export function GhostEvent({
       setIsTypoDetected(true);
       setInput(value); // Show the typo
       setError("❌ TYPO! The ghost is angry!");
-      
+
       // Wait 2 seconds before closing to let user read the message
       setTimeout(() => {
-        onTrick();
+        onTrick(true); // Pass true to indicate typo
       }, 2000);
     }
   };

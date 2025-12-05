@@ -8,7 +8,8 @@ export type EndingType =
   | "kiroween"
   | "kiro"
   | "engineer"
-  | "true";
+  | "true"
+  | "sso";
 
 export type OutputLineType = "command" | "output" | "error" | "system";
 

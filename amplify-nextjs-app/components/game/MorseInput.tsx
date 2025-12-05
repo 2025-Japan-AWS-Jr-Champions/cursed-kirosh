@@ -151,26 +151,31 @@ export default function MorseInput({
         <span className="text-2xl">📡</span>
       </h3>
       
-      {/* Current Sequence Display */}
-      <div className="sequence-display mb-6 min-h-[80px] bg-black/50 border border-purple-700 rounded p-4 text-center relative overflow-hidden">
+      {/* Current Sequence Display - Fixed height to prevent layout shift */}
+      <div className="sequence-display mb-6 h-[100px] bg-black/50 border border-purple-700 rounded p-4 text-center relative overflow-hidden flex flex-col">
         <div className="text-sm text-purple-400 mb-2">Current Sequence:</div>
-        <div className="text-2xl font-mono text-orange-400 tracking-widest">
-          {currentSequence || <span className="text-gray-600 animate-pulse">Waiting for input...</span>}
-        </div>
-        {feedback && (
-          <div className={`text-sm mt-2 font-bold animate-bounce ${
-            feedback.startsWith('Unlocked') ? 'text-green-400' : 'text-red-400'
-          }`}>
-            {feedback}
-          </div>
-        )}
         
-        {/* Progress indicator */}
-        {currentSequence && (
-          <div className="mt-2 text-xs text-purple-300">
-            {currentSequence.length} signal{currentSequence.length !== 1 ? 's' : ''} entered
-          </div>
-        )}
+        <div className="flex-1 flex items-center justify-center text-2xl font-mono text-orange-400 tracking-widest px-2">
+          {currentSequence || <span className="text-gray-600 animate-pulse text-base">Waiting for input...</span>}
+        </div>
+        
+        {/* Feedback and progress in absolute position to not affect layout */}
+        <div className="absolute bottom-2 left-0 right-0">
+          {feedback && (
+            <div className={`text-sm font-bold animate-bounce ${
+              feedback.startsWith('Unlocked') ? 'text-green-400' : 'text-red-400'
+            }`}>
+              {feedback}
+            </div>
+          )}
+          
+          {/* Progress indicator */}
+          {!feedback && currentSequence && (
+            <div className="text-xs text-purple-300">
+              {currentSequence.length} signal{currentSequence.length !== 1 ? 's' : ''} entered
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Example Morse Sequences */}

@@ -16,14 +16,26 @@ export function VirtualKeyboard({
   unlockedChars,
   onCharacterClick,
 }: VirtualKeyboardProps) {
-  // QWERTY keyboard layout
+  // QWERTY keyboard layout with numbers on top
+  const numberRow = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+
   const keyboardRows = [
     ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
     ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
     ["z", "x", "c", "v", "b", "n", "m"],
   ];
 
-  const commonSymbols = [" ", ".", ",", "!", "?", "-", "_"];
+  // Grouped symbols from morse code dictionary
+  const symbolGroups = [
+    [" "], // Space (special)
+    [".", ",", "!", "?"], // Punctuation
+    ["-", "_", "=", "+"], // Math/connectors
+    ["'", '"'], // Quotes
+    ["(", ")"], // Brackets
+    ["/"], // Slash
+    [":", ";"], // Colons
+    ["&", "@", "$"], // Special chars
+  ];
 
   const isUnlocked = (char: string): boolean => {
     return unlockedChars.has(char.toLowerCase());
@@ -39,11 +51,12 @@ export function VirtualKeyboard({
     <div className="virtual-keyboard">
       <div className="keyboard-title">VIRTUAL KEYBOARD</div>
 
-      {/* Alphabetic keys */}
-      <div className="keyboard-rows">
-        {keyboardRows.map((row) => (
-          <div key={row.join("")} className="keyboard-row">
-            {row.map((char) => (
+      <div className="keyboard-layout">
+        {/* Left side: QWERTY + Numbers */}
+        <div className="keyboard-left">
+          {/* Number row */}
+          <div className="keyboard-row">
+            {numberRow.map((char) => (
               <Key
                 key={char}
                 character={char}
@@ -52,21 +65,39 @@ export function VirtualKeyboard({
               />
             ))}
           </div>
-        ))}
-      </div>
 
-      {/* Symbol keys */}
-      <div className="keyboard-symbols">
-        <div className="symbols-label">SYMBOLS:</div>
-        <div className="symbols-row">
-          {commonSymbols.map((char) => (
-            <Key
-              key={char === " " ? "space" : char}
-              character={char === " " ? "SPACE" : char}
-              isUnlocked={isUnlocked(char)}
-              onClick={() => handleKeyClick(char)}
-              isSymbol
-            />
+          {/* Alphabetic keys */}
+          {keyboardRows.map((row) => (
+            <div key={row.join("")} className="keyboard-row">
+              {row.map((char) => (
+                <Key
+                  key={char}
+                  character={char}
+                  isUnlocked={isUnlocked(char)}
+                  onClick={() => handleKeyClick(char)}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+
+        {/* Right side: Grouped symbols */}
+        <div className="keyboard-right">
+          {symbolGroups.map((group) => (
+            <div
+              key={`group-${group.map((c) => (c === " " ? "space" : c)).join("-")}`}
+              className="symbol-group"
+            >
+              {group.map((char) => (
+                <Key
+                  key={char === " " ? "space" : char}
+                  character={char === " " ? "SPC" : char}
+                  isUnlocked={isUnlocked(char)}
+                  onClick={() => handleKeyClick(char)}
+                  isSymbol
+                />
+              ))}
+            </div>
           ))}
         </div>
       </div>
@@ -76,7 +107,7 @@ export function VirtualKeyboard({
           background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 100%);
           border: 2px solid #9933ff;
           border-radius: 8px;
-          padding: 24px;
+          padding: 16px;
           box-shadow: 0 0 20px rgba(153, 51, 255, 0.3);
           font-family: 'Courier New', monospace;
         }
@@ -84,18 +115,26 @@ export function VirtualKeyboard({
         .keyboard-title {
           color: #ff6600;
           font-weight: bold;
-          font-size: 14px;
+          font-size: 16px;
           letter-spacing: 2px;
           text-align: center;
-          margin-bottom: 20px;
+          margin-bottom: 12px;
           text-shadow: 0 0 10px rgba(255, 102, 0, 0.5);
         }
 
-        .keyboard-rows {
+        .keyboard-layout {
+          display: flex;
+          gap: 24px;
+          justify-content: center;
+          align-items: flex-start;
+          max-width: 100%;
+          width: 100%;
+        }
+
+        .keyboard-left {
           display: flex;
           flex-direction: column;
-          gap: 8px;
-          margin-bottom: 20px;
+          gap: 6px;
         }
 
         .keyboard-row {
@@ -104,24 +143,24 @@ export function VirtualKeyboard({
           gap: 6px;
         }
 
-        .keyboard-symbols {
-          border-top: 1px solid #9933ff;
-          padding-top: 16px;
+        .keyboard-right {
+          display: grid;
+          grid-template-columns: repeat(2, auto);
+          gap: 8px 12px;
+          align-content: flex-start;
+        }
+        
+        .keyboard-right > .symbol-group:nth-child(odd) {
+          justify-content: flex-end;
+        }
+        
+        .keyboard-right > .symbol-group:nth-child(even) {
+          justify-content: flex-start;
         }
 
-        .symbols-label {
-          color: #9933ff;
-          font-size: 12px;
-          font-weight: bold;
-          margin-bottom: 8px;
-          text-align: center;
-        }
-
-        .symbols-row {
+        .symbol-group {
           display: flex;
-          justify-content: center;
-          gap: 6px;
-          flex-wrap: wrap;
+          gap: 4px;
         }
       `}</style>
     </div>
@@ -169,8 +208,8 @@ function Key({ character, isUnlocked, onClick, isSymbol = false }: KeyProps) {
       <style jsx>{`
         .key {
           position: relative;
-          width: ${isSymbol ? "60px" : "40px"};
-          height: 40px;
+          width: ${isSymbol ? "40px" : "40px"};
+          height: 28px;
           border: 2px solid;
           border-radius: 4px;
           font-family: 'Courier New', monospace;

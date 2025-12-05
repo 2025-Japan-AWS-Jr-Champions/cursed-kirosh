@@ -4,7 +4,7 @@
  * EndingScreen component - displays game ending with unique visuals for each ending type
  */
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { EndingType } from "@/lib/game/types";
 import { submitScore } from "@/lib/game/leaderboard";
 
@@ -91,6 +91,15 @@ function getEndingContent(ending: EndingType): {
         color: "text-yellow-400",
       };
 
+    case "sso":
+      return {
+        title: "Game Over - SSO Ending",
+        message:
+          "You attempted Single Sign-On to the void. You have been logged out of existence. The curse consumed you completely.",
+        artwork: "💀",
+        color: "text-red-500",
+      };
+
     default:
       return {
         title: "Unknown Ending",
@@ -115,6 +124,10 @@ export default function EndingScreen({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [showWarningModal, setShowWarningModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<
+    "restart" | "leaderboard" | null
+  >(null);
 
   // Handle score submission
   const handleSubmitScore = async () => {
@@ -141,7 +154,8 @@ export default function EndingScreen({
       setShowNamePrompt(false);
     } else {
       setSubmitError(
-        result.error || "Failed to submit score. Your score has been saved locally and will be submitted when you're back online."
+        result.error ||
+          "Failed to submit score. Your score has been saved locally and will be submitted when you're back online.",
       );
     }
   };
@@ -149,6 +163,43 @@ export default function EndingScreen({
   // Handle skip submission
   const handleSkip = () => {
     setShowNamePrompt(false);
+  };
+
+  // Handle restart with warning if score not submitted
+  const handleRestartWithWarning = () => {
+    if (showNamePrompt && !submitSuccess) {
+      setPendingAction("restart");
+      setShowWarningModal(true);
+    } else {
+      onRestart();
+    }
+  };
+
+  // Handle view leaderboard with warning if score not submitted
+  const handleViewLeaderboardWithWarning = () => {
+    if (showNamePrompt && !submitSuccess) {
+      setPendingAction("leaderboard");
+      setShowWarningModal(true);
+    } else {
+      onViewLeaderboard();
+    }
+  };
+
+  // Confirm warning and proceed
+  const handleConfirmWarning = () => {
+    setShowWarningModal(false);
+    if (pendingAction === "restart") {
+      onRestart();
+    } else if (pendingAction === "leaderboard") {
+      onViewLeaderboard();
+    }
+    setPendingAction(null);
+  };
+
+  // Cancel warning
+  const handleCancelWarning = () => {
+    setShowWarningModal(false);
+    setPendingAction(null);
   };
 
   // Handle Enter key in name input
@@ -163,7 +214,9 @@ export default function EndingScreen({
       <div className="max-w-2xl w-full mx-4 p-8 bg-gradient-to-br from-purple-900/50 to-orange-900/50 border-2 border-orange-500 rounded-lg shadow-2xl animate-scale-in">
         {/* Artwork */}
         <div className="text-center mb-6">
-          <div className="text-8xl mb-4 animate-bounce-slow">{content.artwork}</div>
+          <div className="text-8xl mb-4 animate-bounce-slow">
+            {content.artwork}
+          </div>
         </div>
 
         {/* Title */}
@@ -202,7 +255,9 @@ export default function EndingScreen({
                 disabled={isSubmitting}
               />
               {submitError && (
-                <p className="text-sm text-red-400 text-center">{submitError}</p>
+                <p className="text-sm text-red-400 text-center">
+                  {submitError}
+                </p>
               )}
               <div className="flex gap-3">
                 <button
@@ -239,14 +294,14 @@ export default function EndingScreen({
         <div className="flex gap-4 justify-center">
           <button
             type="button"
-            onClick={onRestart}
+            onClick={handleRestartWithWarning}
             className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-orange-500/50"
           >
             Play Again
           </button>
           <button
             type="button"
-            onClick={onViewLeaderboard}
+            onClick={handleViewLeaderboardWithWarning}
             className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-purple-500/50"
           >
             View Leaderboard
@@ -258,6 +313,39 @@ export default function EndingScreen({
           Thank you for playing Cursed Kirosh!
         </div>
       </div>
+
+      {/* Warning Modal */}
+      {showWarningModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+          <div className="max-w-md w-full mx-4 p-6 bg-gradient-to-br from-red-900/90 to-orange-900/90 border-2 border-red-500 rounded-lg shadow-2xl">
+            <div className="text-center mb-4">
+              <div className="text-6xl mb-4">⚠️</div>
+              <h2 className="text-2xl font-bold text-red-400 mb-2">Warning!</h2>
+              <p className="text-gray-200 leading-relaxed">
+                If you don't submit your score, it will not be recorded and will
+                be lost forever.
+              </p>
+            </div>
+
+            <div className="flex gap-4 justify-center mt-6">
+              <button
+                type="button"
+                onClick={handleCancelWarning}
+                className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors duration-200"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmWarning}
+                className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors duration-200"
+              >
+                Continue Anyway
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
